@@ -1,9 +1,10 @@
-PROGRAM=lava
-CXX       = g++
-CXXFLAGS  = -g -std=c++17 -Wall -lGL -lglut -lGLU -lm
+CFLAGS = -Wall -Wextra -std=c++11 -lglut -lGLU -lGL
 
-$(PROGRAM): main.o
-	$(CXX) -o $(PROGRAM) main.o
+lava: main.o 
+	g++ $^ $(CFLAGS) -o $@
+	
+main.o: main.cpp 
+	g++ -c $< $(CFLAGS)
 
 .PHONY: clean dist
 
