@@ -3,6 +3,7 @@
 
 static void on_reshape(int width, int height);
 static void on_display(void);
+static void on_keyboard(unsigned char key, int x , int y);
 
 class Island{
 public:
@@ -176,7 +177,7 @@ int main(int argc, char** argv){
 	
     glutReshapeFunc(on_reshape);
     glutDisplayFunc(on_display);
-
+    glutKeyboardFunc(on_keyboard);
     
     
 	glClearColor(0, 0, 0, 0);
@@ -220,4 +221,11 @@ void on_display(void){
     man.man_draw();
 	//nova slika
 	glutSwapBuffers();
+}
+static void on_keyboard(unsigned char key, int x, int y){
+ switch(key){
+     case 27:
+         exit(0);
+         break;
+ }
 }
