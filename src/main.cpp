@@ -51,6 +51,114 @@ private:
     
 };
 
+class Man{
+public:
+    Man(double x_pos, double y_pos, double z_pos)
+    :m_x_pos(x_pos), m_y_pos(y_pos), m_z_pos(z_pos) 
+    {};
+  
+    void man_figure() const{
+    
+     glPushMatrix();    
+		glColor3f(.8, 0.2, 0.2);
+		glScalef(1, 1.43, .5);
+		glutSolidCube(1);
+	glPopMatrix();
+	
+	
+	//noge
+	glPushMatrix();
+		glColor3f(0.2, 0.5, 0.2);
+		glTranslatef(-.35, -1.5, 0);
+		glScalef(.4, 1.5, .4);
+		glutSolidCube(1);
+	glPopMatrix();
+
+
+	glPushMatrix();
+		glColor3f(0.2, 0.5, 0.2);
+		glTranslatef(.35, -1.5, 0);
+		glScalef(.4, 1.5, .4);
+		glutSolidCube(1);
+	glPopMatrix();
+    
+    //ruke
+	glPushMatrix();
+		glColor3f(.8, .65, .45);
+		glTranslatef(-.62, .084, 0);
+		glScalef(.2, 1.3, .2);
+		glutSolidCube(1);
+	glPopMatrix();
+
+	glPushMatrix();
+		glTranslatef(.62, .084, 0);
+		glScalef(.2, 1.3, .2);
+		glutSolidCube(1);
+	glPopMatrix();
+
+	//vrat 
+	glPushMatrix();  
+		glColor3f(.8, .65, .45);
+		glTranslatef(0, .86, 0);
+		glScalef(.3, .3, .3);
+		glutSolidCube(1);
+	glPopMatrix();
+	
+	//glava
+	glPushMatrix();
+		glColor3f(.8, .65, .45);
+		glTranslatef(0, 1.3, 0);
+		glScalef(.35, .45, .3);
+		glutSolidSphere(1, 20, 20);
+	glPopMatrix();
+
+	//oci
+	glPushMatrix();
+		glColor3f(0, 0, 0);
+		glTranslatef(-.17, 1.3, .32);
+		glScalef(.04, .04, .04);
+		glutSolidSphere(1, 20, 20);
+	glPopMatrix();
+
+	glPushMatrix();
+		glColor3f(0, 0, 0);
+		glTranslatef(0.17, 1.3, .32);
+		glScalef(.04, .04, .04);
+		glutSolidSphere(1, 20, 20);
+	glPopMatrix();
+		  
+    //nos
+    glPushMatrix();
+        glColor3f(.8,0.8,0.9);
+        glTranslatef(0,1.2,0.3);
+        glScalef(.05,.1,.05);
+        glutSolidCube(1);
+    glPopMatrix();
+    
+    //usta
+    glPushMatrix();
+        glColor3f(.8,0.7,0.3);
+        glTranslatef(0,1,0.3);
+        glScalef(.1,.05,.05);
+        glutSolidSphere(1,20,20);   
+    
+    glPopMatrix();
+    }
+    void man_draw(){
+        glPushMatrix();
+            glTranslatef(m_x_pos, m_y_pos, m_z_pos);
+            man_figure();
+        glPopMatrix();	
+        
+    }
+    
+    
+private:
+    double m_x_pos, m_y_pos, m_z_pos;
+};
+
+Man man(0,3,-15);
+
 
 Island i1(0, 0, -29);
 Island i2(0, 0, 29);
@@ -109,6 +217,7 @@ void on_display(void){
 
     i1.island_draw();
     i2.island_draw();
+    man.man_draw();
 	//nova slika
 	glutSwapBuffers();
 }
