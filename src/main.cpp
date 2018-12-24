@@ -2,7 +2,7 @@
 #include <iostream>
 
 static void on_reshape(int width, int height);
-
+static void on_display(void);
 
 int main(int argc, char** argv){
 	//inicijalizujemo glut
@@ -16,6 +16,7 @@ int main(int argc, char** argv){
 	
 	
     glutReshapeFunc(on_reshape);
+    glutDisplayFunc(on_display);
 
     
     
@@ -41,3 +42,21 @@ void on_reshape(int width, int height) {
 }
 
 
+
+void on_display(void){
+	
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+	
+	//podesavamo lookat
+	glMatrixMode(GL_MODELVIEW);
+    glLoadIdentity();
+	//iz svih uglova
+	gluLookAt(-30, 17, 0, 0, 0, 0, 0, 1, 0);
+
+	glColorMaterial(GL_FRONT_AND_BACK, GL_DIFFUSE);
+	glEnable(GL_COLOR_MATERIAL);
+
+
+	//nova slika
+	glutSwapBuffers();
+}
