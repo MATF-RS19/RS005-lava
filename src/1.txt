@@ -1,1 +1,1 @@
-uradjena je openGL inicijalizacija
+Sredjen Makefile.
