@@ -4,6 +4,57 @@
 static void on_reshape(int width, int height);
 static void on_display(void);
 
+class Island{
+public:
+    Island(double x_pos, double y_pos, double z_pos):
+    m_x_pos(x_pos), m_y_pos(y_pos), m_z_pos(z_pos)
+    {};
+    
+    void island_draw(){
+        glPushMatrix();
+            glTranslatef(m_x_pos, m_y_pos, m_z_pos);
+            glScalef(15, 1, 15);
+            island_figure();
+        glPopMatrix();	
+
+    };
+    
+    void island_figure(){
+        //openGL deo preuzet iz mog projekta za RG
+        glPushMatrix();    
+            glColor3f(.3, .3, .3);
+            glScalef(2, .3, 2);
+            glutSolidCube(1);
+        glPopMatrix();
+        
+        //sredina
+        glPushMatrix();
+            glTranslatef(0, .3, 0);
+            glColor3f(.3, .3, .3);
+            glScalef(1.93, .25, 1.93);
+            glutSolidCube(1);
+        glPopMatrix();
+        
+        //vrh
+        glPushMatrix();
+            glTranslatef(0, .55, 0);
+            glColor3f(.3, .3, .3);
+            glScalef(1.86, .15, 1.86);
+            glutSolidCube(1);
+        glPopMatrix();
+    }
+    
+private:
+    double m_x_pos;
+    double m_y_pos;
+    double m_z_pos;
+    
+};
+
+
+Island i1(0, 0, -29);
+Island i2(0, 0, 29);
+
 int main(int argc, char** argv){
 	//inicijalizujemo glut
 	glutInit(&argc, argv);
@@ -56,7 +107,8 @@ void on_display(void){
 	glColorMaterial(GL_FRONT_AND_BACK, GL_DIFFUSE);
 	glEnable(GL_COLOR_MATERIAL);
 
-
+    i1.island_draw();
+    i2.island_draw();
 	//nova slika
 	glutSwapBuffers();
 }
