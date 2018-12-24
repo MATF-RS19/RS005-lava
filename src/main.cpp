@@ -242,10 +242,10 @@ void on_display(void){
 
 	glColorMaterial(GL_FRONT_AND_BACK, GL_DIFFUSE);
 	glEnable(GL_COLOR_MATERIAL);
+    floor.floor_draw();
 
     i1.island_draw();
     i2.island_draw();
-    floor.floor_draw();
     man.man_draw();
     
 	glutSwapBuffers();
