@@ -4,6 +4,32 @@
 static void on_reshape(int width, int height);
 static void on_display(void);
 
+class Floor{
+public: 
+    Floor(double x_pos, double y_pos, double z_pos):
+    m_x_pos(x_pos), m_y_pos(y_pos), m_z_pos(z_pos)
+    {};
+    
+    void floor_draw(){
+        glPushMatrix();
+            glBegin(GL_QUADS);
+                glNormal3f(0, 1, 0);
+                glVertex3f(-400+m_x_pos, 0+m_y_pos, -400+m_z_pos); 
+                glVertex3f(400+m_x_pos, 0+m_y_pos, -400+m_z_pos); 
+                glVertex3f(400+m_x_pos, 0+m_y_pos, 400+m_z_pos); 
+                glVertex3f(-400+m_x_pos, 0+m_y_pos, 400+m_z_pos);
+            glEnd();
+        glPopMatrix();
+  
+        
+    }
+private:
+    double m_x_pos;
+    double m_y_pos;
+    double m_z_pos;
+    
+};
+
 class Island{
 public:
     Island(double x_pos, double y_pos, double z_pos):
@@ -54,6 +80,7 @@ private:
 
 Island i1(0, 0, -29);
 Island i2(0, 0, 29);
+Floor floor(0, 0, 0);
 
 int main(int argc, char** argv){
 	//inicijalizujemo glut
@@ -109,6 +136,7 @@ void on_display(void){
 
     i1.island_draw();
     i2.island_draw();
-	//nova slika
+    floor.floor_draw();
+    //nova slika
 	glutSwapBuffers();
 }
