@@ -13,6 +13,7 @@ public:
     
     void floor_draw(){
         glPushMatrix();
+            glColor3f(1,.6,0);
             glBegin(GL_QUADS);
                 glNormal3f(0, 1, 0);
                 glVertex3f(-400+m_x_pos, 0+m_y_pos, -400+m_z_pos); 
