@@ -13,6 +13,7 @@ public:
     
     void floor_draw(){
         glPushMatrix();
+            glColor3f(1,.6,0);
             glBegin(GL_QUADS);
                 glNormal3f(0, 1, 0);
                 glVertex3f(-400+m_x_pos, 0+m_y_pos, -400+m_z_pos); 
@@ -111,21 +112,21 @@ public:
     
     //ruke
 	glPushMatrix();
-		glColor3f(.8, .65, .45);
-		glTranslatef(-.62, .084, 0);
+		glColor3f(.8, .7, .45);
+		glTranslatef(-.62, .09, 0);
 		glScalef(.2, 1.3, .2);
 		glutSolidCube(1);
 	glPopMatrix();
 
 	glPushMatrix();
-		glTranslatef(.62, .084, 0);
+		glTranslatef(.62, .09, 0);
 		glScalef(.2, 1.3, .2);
 		glutSolidCube(1);
 	glPopMatrix();
 
 	//vrat 
 	glPushMatrix();  
-		glColor3f(.8, .65, .45);
+		glColor3f(.9, .7, .45);
 		glTranslatef(0, .86, 0);
 		glScalef(.3, .3, .3);
 		glutSolidCube(1);
@@ -238,12 +239,33 @@ void on_display(void){
 	glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
 	//iz svih uglova
-	gluLookAt(-30, 17, 0, 0, 0, 0, 0, 1, 0);
+	gluLookAt(-30, 20, 0, 0, 0, 0, 0, 1, 0);
 
-	glColorMaterial(GL_FRONT_AND_BACK, GL_DIFFUSE);
-	glEnable(GL_COLOR_MATERIAL);
+ 	glColorMaterial(GL_FRONT_AND_BACK, GL_DIFFUSE);
+ 	glEnable(GL_COLOR_MATERIAL);
+
+    glEnable(GL_LIGHT0);
+    glEnable(GL_LIGHTING);
+    GLfloat light_position[]={-30,20,6,0};
+    GLfloat ambient_coefs[]={0.1,0.2,0.3,1};
+    GLfloat diffuse_coefs[]={1,1,1,1};
+    GLfloat specular_coefs[]={0.9,.7,.8,1};
+    
+    glLightfv(GL_LIGHT0, GL_POSITION, light_position);
+    glLightfv(GL_LIGHT0,GL_AMBIENT,ambient_coefs);
+    glLightfv(GL_LIGHT0,GL_SPECULAR, specular_coefs);
+    glLightfv(GL_LIGHT0, GL_DIFFUSE, diffuse_coefs);
+ 
+    GLfloat ambient_material[]={0.2,.3,.3,1};
+    GLfloat specular_material[]={.5,.6,.6,1};
+    GLfloat shininess=90;
+    
+    glMaterialf(GL_FRONT_AND_BACK, GL_SHININESS, shininess);
+    glMaterialfv(GL_FRONT_AND_BACK, GL_AMBIENT,ambient_material);
+    glMaterialfv(GL_FRONT_AND_BACK, GL_SPECULAR, specular_material); 
+
+    
     floor.floor_draw();
-
     i1.island_draw();
     i2.island_draw();
     man.man_draw();
