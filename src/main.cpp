@@ -44,12 +44,13 @@ public:
     {};
     
     void floor_draw(GLuint lava_texture){
-	
+        //initializes textures
         glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_REPLACE);
         glBindTexture(GL_TEXTURE_2D, lava_texture);
         glPushMatrix();
             glColor3f(1,.6,0);
             glBegin(GL_QUADS);
+            //draws polygon with textures
                 glNormal3f(0, 1, 0);
                 glTexCoord2f(0, 0);	
                 glVertex3f(-400+m_x_pos, 0+m_y_pos, -400+m_z_pos); 
