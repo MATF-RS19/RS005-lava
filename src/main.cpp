@@ -1,13 +1,22 @@
 #include <GL/glut.h>
 #include <iostream>
 #include "image.h"
+<<<<<<< Updated upstream
+#define LAVATEXTURE "lava.bmp"
+
+GLuint lava_texture;
+=======
+
 #define LAVATEXTURE "lava.bmp"
 
 GLuint lava_texture;
 
+>>>>>>> Stashed changes
+
 static void on_reshape(int width, int height);
 static void on_display(void);
 static void on_keyboard(unsigned char key, int x , int y);
+<<<<<<< Updated upstream
 static void initializeTexture(void);
 
 class Stone{
@@ -36,6 +45,9 @@ private:
 };
 
 
+=======
+static void textures(void);
+>>>>>>> Stashed changes
 
 class Floor{
 public: 
@@ -258,8 +270,13 @@ int main(int argc, char** argv){
 	glEnable(GL_NORMALIZE);
 	glEnable(GL_TEXTURE_2D);
 
+<<<<<<< Updated upstream
 	initializeTexture();
 
+=======
+	textures();
+	
+>>>>>>> Stashed changes
 	//glavna petlja
 	glutMainLoop();
 	return 0;
@@ -287,8 +304,14 @@ void on_display(void){
 	//iz svih uglova
 	gluLookAt(-30, 20, 0, 0, 0, 0, 0, 1, 0);
 
+<<<<<<< Updated upstream
  	glColorMaterial(GL_FRONT_AND_BACK, GL_DIFFUSE);
  	glEnable(GL_COLOR_MATERIAL);
+=======
+	glColorMaterial(GL_FRONT_AND_BACK, GL_DIFFUSE);
+	glEnable(GL_COLOR_MATERIAL);
+    floor.floor_draw(lava_texture);
+>>>>>>> Stashed changes
 
     glEnable(GL_LIGHT0);
     glEnable(GL_LIGHTING);
@@ -319,6 +342,41 @@ void on_display(void){
     
 	glutSwapBuffers();
 }
+
+
+void textures(void)
+{
+	//kod sa casa
+	    glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_REPLACE);
+
+	/* Inicijalizuje se objekat koji ce sadrzati teksture ucitane iz fajla */
+    Image *image = image_init(0, 0);
+
+
+    /* Kreira se tekstura */
+    image_read(image, LAVATEXTURE);
+
+    /* Generisu se identifikatori teksture i inicijalizuje tekstura*/
+    glGenTextures(1, &lava_texture);
+
+    glBindTexture(GL_TEXTURE_2D, lava_texture);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB,
+                 image->width, image->height, 0,
+                 GL_RGB, GL_UNSIGNED_BYTE, image->pixels);
+
+    /* Iskljucujemo aktivnu teksturu */
+    glBindTexture(GL_TEXTURE_2D, 0);
+
+    /* Unistava se objekat za citanje tekstura iz fajla. */
+    image_done(image);
+}
+
+
+
 static void on_keyboard(unsigned char key, int x, int y){
  switch(key){
      case 27:
