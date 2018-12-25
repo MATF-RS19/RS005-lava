@@ -1,9 +1,14 @@
 #include <GL/glut.h>
 #include <iostream>
+#include "image.h"
+#define LAVATEXTURE "lava.bmp"
+
+GLuint lava_texture;
 
 static void on_reshape(int width, int height);
 static void on_display(void);
 static void on_keyboard(unsigned char key, int x , int y);
+static void initializeTexture(void);
 
 class Floor{
 public: 
@@ -11,17 +16,28 @@ public:
     m_x_pos(x_pos), m_y_pos(y_pos), m_z_pos(z_pos)
     {};
     
-    void floor_draw(){
+    void floor_draw(GLuint lava_texture){
+	
+        glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_REPLACE);
+        glBindTexture(GL_TEXTURE_2D, lava_texture);
         glPushMatrix();
             glColor3f(1,.6,0);
             glBegin(GL_QUADS);
                 glNormal3f(0, 1, 0);
+                glTexCoord2f(0, 0);	
                 glVertex3f(-400+m_x_pos, 0+m_y_pos, -400+m_z_pos); 
+                glTexCoord2f(40, 0);	
                 glVertex3f(400+m_x_pos, 0+m_y_pos, -400+m_z_pos); 
+                glTexCoord2f(40, 40);	
                 glVertex3f(400+m_x_pos, 0+m_y_pos, 400+m_z_pos); 
+                glTexCoord2f(0, 60);	
                 glVertex3f(-400+m_x_pos, 0+m_y_pos, 400+m_z_pos);
             glEnd();
+      		glBindTexture(GL_TEXTURE_2D, 0);
+            glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE);
+
         glPopMatrix();
+        
   
         
     }
@@ -213,7 +229,8 @@ int main(int argc, char** argv){
 	glEnable(GL_NORMALIZE);
 	glEnable(GL_TEXTURE_2D);
 
-	
+	initializeTexture();
+
 	//glavna petlja
 	glutMainLoop();
 	return 0;
@@ -264,7 +281,7 @@ void on_display(void){
     glMaterialfv(GL_FRONT_AND_BACK, GL_AMBIENT,ambient_material);
     glMaterialfv(GL_FRONT_AND_BACK, GL_SPECULAR, specular_material);
     
-    floor.floor_draw();
+    floor.floor_draw(lava_texture);
     i1.island_draw();
     i2.island_draw();
     man.man_draw();
@@ -277,4 +294,37 @@ static void on_keyboard(unsigned char key, int x, int y){
          exit(0);
          break;
  }
+}
+
+
+
+void initializeTexture(void)
+{
+	//kod sa casa
+	    glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_REPLACE);
+
+	/* Inicijalizuje se objekat koji ce sadrzati teksture ucitane iz fajla */
+    Image *image = image_init(0, 0);
+
+
+    /* Kreira se tekstura */
+    image_read(image, LAVATEXTURE);
+
+    /* Generisu se identifikatori teksture i inicijalizuje tekstura*/
+    glGenTextures(1, &lava_texture);
+
+    glBindTexture(GL_TEXTURE_2D, lava_texture);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB,
+                 image->width, image->height, 0,
+                 GL_RGB, GL_UNSIGNED_BYTE, image->pixels);
+
+    /* Iskljucujemo aktivnu teksturu */
+    glBindTexture(GL_TEXTURE_2D, 0);
+
+    /* Unistava se objekat za citanje tekstura iz fajla. */
+    image_done(image);
 }
