@@ -10,6 +10,33 @@ static void on_display(void);
 static void on_keyboard(unsigned char key, int x , int y);
 static void initializeTexture(void);
 
+class Stone{
+    
+public:
+    Stone(double x_pos, double y_pos, double z_pos)
+    :m_x_pos(x_pos),m_y_pos(y_pos),m_z_pos(z_pos){};
+    
+    void stone_draw(){
+        glPushMatrix();
+             glColor3f(0.5,0.5,0.4);
+             glScalef(2.5,.3,2.5);
+             glutSolidCube(1);
+        glPopMatrix();
+        glPushMatrix();
+            glColor3f(.6,0.6,0.5);
+            glScalef(2,.4,2);
+            glutSolidCube(1);
+         glPopMatrix();
+    }
+    
+private:
+    double m_x_pos;
+    double m_y_pos;
+    double m_z_pos;
+};
+
+
+
 class Floor{
 public: 
     Floor(double x_pos, double y_pos, double z_pos):
@@ -204,6 +231,7 @@ private:
 Man man(0,3,-15);
 
 
+Stone stone(0,0,0);
 Island i1(0, 0, -29);
 Island i2(0, 0, 29);
 Floor floor(0, 0, 0);
@@ -285,6 +313,8 @@ void on_display(void){
     i1.island_draw();
     i2.island_draw();
     man.man_draw();
+    
+    stone.stone_draw();
     
 	glutSwapBuffers();
 }
