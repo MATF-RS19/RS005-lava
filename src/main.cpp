@@ -13,7 +13,6 @@ public:
     
     void floor_draw(){
         glPushMatrix();
-            glColor3f(1,.6,0);
             glBegin(GL_QUADS);
                 glNormal3f(0, 1, 0);
                 glVertex3f(-400+m_x_pos, 0+m_y_pos, -400+m_z_pos); 
@@ -256,14 +255,6 @@ void on_display(void){
     glLightfv(GL_LIGHT0,GL_SPECULAR, specular_coefs);
     glLightfv(GL_LIGHT0, GL_DIFFUSE, diffuse_coefs);
  
-    GLfloat ambient_material[]={0.2,.3,.3,1};
-    GLfloat specular_material[]={.5,.6,.6,1};
-    GLfloat shininess=90;
-    
-    glMaterialf(GL_FRONT_AND_BACK, GL_SHININESS, shininess);
-    glMaterialfv(GL_FRONT_AND_BACK, GL_AMBIENT,ambient_material);
-    glMaterialfv(GL_FRONT_AND_BACK, GL_SPECULAR, specular_material); 
-
     
     floor.floor_draw();
     i1.island_draw();
