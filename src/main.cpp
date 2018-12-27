@@ -141,6 +141,24 @@ public:
     :m_x_pos(x_pos), m_y_pos(y_pos), m_z_pos(z_pos) 
     {};
   
+    void setX(double x){
+        m_x_pos=x;
+    }
+    void setY(double y){
+        m_y_pos=y;
+    }
+    void setZ(double z){
+        m_z_pos=z;
+    }
+    double getX() const{
+        return m_x_pos;
+    }
+    double getY() const{
+        return m_y_pos;
+    }
+    double getZ() const{
+        return m_z_pos;
+    }
     void man_figure() const{
     
      glPushMatrix();    
