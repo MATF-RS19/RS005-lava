@@ -8,6 +8,7 @@
 #define LAVATEXTURE "lava.bmp"
 #define TIMER_INTERVAL 20
 #define JUMP_LEN 5
+#define JUMP_HEIGHT 2
 
 GLuint lava_texture;
 
@@ -248,7 +249,7 @@ public:
     }
     void man_draw(){
         glPushMatrix();
-            glTranslatef(m_x_pos, m_y_pos, m_z_pos);
+            glTranslatef(m_x_pos+0.0, m_y_pos, m_z_pos);
             man_figure();
         glPopMatrix();	
         
@@ -274,7 +275,10 @@ public:
         if(m_jump_ongoing==1){
             if(m_jumped<JUMP_LEN){
                 m_jumped+=.2;
-                
+                m_m.setZ(m_m.getZ()+.2);
+                m_m.setY((-4*JUMP_HEIGHT*m_jumped*m_jumped)/(JUMP_LEN*JUMP_LEN)+4*JUMP_HEIGHT*m_jumped/JUMP_LEN);
+                std::cout<<m_m.getZ()<<","<<m_m.getY()<<std::endl;
+                //glutPostRedisplay();
             }
         }
     }
@@ -416,9 +420,10 @@ static void on_keyboard(unsigned char key, int x, int y){
             exit(0);
             break;
         case 'j':
-            if(a.getJumpOngoing()){
+            if(a.getJumpOngoing()==0){
                 a.setJumpOngoing(1);
                 a.setJumped(0);
+                std::cout<<a.getJumpOngoing()<<std::endl;
        			glutTimerFunc(TIMER_INTERVAL, on_timer, 0);
             }
             break;
@@ -458,8 +463,18 @@ void initializeTexture(void)
     /* Unistava se objekat za citanje tekstura iz fajla. */
     image_done(image);
 }
+
+
 static void on_timer(int value){
 	if (value != 0)
         return;
+    if(a.getJumpOngoing()==1){
+        a.jump_anim();
+    }
+	//ponovo se iscrtava prozor	
+	glutPostRedisplay();
+
+    //ako je presao dovoljno prestaje da skace
+    glutTimerFunc(TIMER_INTERVAL, on_timer, 0);
 
 }
