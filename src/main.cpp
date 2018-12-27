@@ -324,39 +324,6 @@ void on_display(void){
 }
 
 
-void textures(void)
-{
-	//kod sa casa
-	    glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_REPLACE);
-
-	/* Inicijalizuje se objekat koji ce sadrzati teksture ucitane iz fajla */
-    Image *image = image_init(0, 0);
-
-
-    /* Kreira se tekstura */
-    image_read(image, LAVATEXTURE);
-
-    /* Generisu se identifikatori teksture i inicijalizuje tekstura*/
-    glGenTextures(1, &lava_texture);
-
-    glBindTexture(GL_TEXTURE_2D, lava_texture);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB,
-                 image->width, image->height, 0,
-                 GL_RGB, GL_UNSIGNED_BYTE, image->pixels);
-
-    /* Iskljucujemo aktivnu teksturu */
-    glBindTexture(GL_TEXTURE_2D, 0);
-
-    /* Unistava se objekat za citanje tekstura iz fajla. */
-    image_done(image);
-}
-
-
-
 static void on_keyboard(unsigned char key, int x, int y){
  switch(key){
      case 27:
