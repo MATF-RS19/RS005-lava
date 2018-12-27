@@ -1,5 +1,8 @@
 #include <GL/glut.h>
 #include <iostream>
+#include <vector>
+#include <iterator>
+#include <algorithm>
 #include "image.h"
 #define LAVATEXTURE "lava.bmp"
 
@@ -14,18 +17,20 @@ static void initializeTexture(void);
 class Stone{
     
 public:
-    Stone(double x_pos, double y_pos, double z_pos)
-    :m_x_pos(x_pos),m_y_pos(y_pos),m_z_pos(z_pos){};
+    Stone(double x_pos, double y_pos, double z_pos, double stone_speed, double scale)
+    :m_x_pos(x_pos),m_y_pos(y_pos),m_z_pos(z_pos), m_speed(stone_speed),m_scale(scale){};
     
-    void stone_draw(){
+    void stone_draw() const{
         glPushMatrix();
              glColor3f(0.5,0.5,0.4);
-             glScalef(2.5,.3,2.5);
+             glTranslatef(m_x_pos,m_y_pos,m_z_pos);
+             glScalef(2.5*m_scale,.3,2.5*m_scale);
              glutSolidCube(1);
         glPopMatrix();
         glPushMatrix();
             glColor3f(.6,0.6,0.5);
-            glScalef(2,.4,2);
+            glTranslatef(m_x_pos,m_y_pos,m_z_pos);
+            glScalef(2*m_scale,.4,2*m_scale);
             glutSolidCube(1);
          glPopMatrix();
     }
@@ -34,8 +39,9 @@ private:
     double m_x_pos;
     double m_y_pos;
     double m_z_pos;
+    double m_speed;
+    double m_scale;
 };
-
 
 static void initializeTexture(void);
 
@@ -231,10 +237,11 @@ private:
     double m_x_pos, m_y_pos, m_z_pos;
 };
 
+
 Man man(0,3,-15);
+std::vector<Stone> stones;
 
-
-Stone stone(0,0,0);
+// Stone stone(0,0,0,1,1);
 Island i1(0, 0, -29);
 Island i2(0, 0, 29);
 Floor floor(0, 0, 0);
@@ -317,8 +324,20 @@ void on_display(void){
     i1.island_draw();
     i2.island_draw();
     man.man_draw();
-    
-    stone.stone_draw();
+    for (int i=0;i<5;i++)
+    {
+        if(i%2==0){
+            Stone stone(-10,0.0,i*5-10.0,0.1,1);
+      stones.push_back(stone);
+        }
+        else{
+            Stone stone(10,0.0,i*5-10.0,0.1,1);
+      stones.push_back(stone);      
+        }
+    }
+    for (Stone stonee: stones){
+        stonee.stone_draw();   
+    }
     
 	glutSwapBuffers();
 }
