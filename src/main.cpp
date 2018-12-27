@@ -4,11 +4,15 @@
 #include <iterator>
 #include <algorithm>
 #include "image.h"
+
 #define LAVATEXTURE "lava.bmp"
+#define TIMER_INTERVAL 20
+#define JUMP_LEN 5
 
 GLuint lava_texture;
 
 
+static void on_timer(int value);
 static void on_reshape(int width, int height);
 static void on_display(void);
 static void on_keyboard(unsigned char key, int x , int y);
@@ -238,6 +242,50 @@ private:
 };
 
 
+
+class Animation{
+public:
+	Animation(Man m, std::vector<Stone> s, int jump_ongoing=0, double jumped=0)
+		: m_m(m), m_s(s), m_jump_ongoing(jump_ongoing), m_jumped(jumped) {}
+	void move_stones(){
+        
+        
+    }
+    
+    void jump_anim(){
+        if(m_jump_ongoing==1){
+            if(m_jumped<JUMP_LEN){
+                m_jumped+=.2;
+                
+            }
+        }
+    }
+    int getJumpOngoing() const
+    {
+        return m_jump_ongoing;
+    }
+    void setJumpOngoing(int j){
+        m_jump_ongoing=j;
+    }
+    int getJumped() const
+    {
+        return m_jumped;
+    }
+    void setJumped(int j){
+        m_jumped=j;
+    }
+
+
+private:
+	Man m_m;
+	std::vector<Stone> m_s;
+    int m_jump_ongoing;
+    double m_jumped;
+};
+
+
+
+
 Man man(0,3,-15);
 std::vector<Stone> stones;
 
@@ -245,7 +293,8 @@ std::vector<Stone> stones;
 Island i1(0, 0, -29);
 Island i2(0, 0, 29);
 Floor floor(0, 0, 0);
-
+Animation a(man, stones, 0, 0);
+    
 int main(int argc, char** argv){
 	//inicijalizujemo glut
 	glutInit(&argc, argv);
@@ -328,11 +377,11 @@ void on_display(void){
     {
         if(i%2==0){
             Stone stone(-10,0.0,i*5-10.0,0.1,1);
-      stones.push_back(stone);
+            stones.push_back(stone);
         }
         else{
             Stone stone(10,0.0,i*5-10.0,0.1,1);
-      stones.push_back(stone);      
+            stones.push_back(stone);      
         }
     }
     for (Stone stonee: stones){
@@ -344,12 +393,20 @@ void on_display(void){
 
 
 static void on_keyboard(unsigned char key, int x, int y){
- switch(key){
-     case 27:
-         exit(0);
-         break;
- }
+    switch(key){
+        case 27:
+            exit(0);
+            break;
+        case 'j':
+            if(a.getJumpOngoing()){
+                a.setJumpOngoing(1);
+                a.setJumped(0);
+       			glutTimerFunc(TIMER_INTERVAL, on_timer, 0);
+            }
+            break;
+    }
 }
+
 
 
 
@@ -382,4 +439,9 @@ void initializeTexture(void)
 
     /* Unistava se objekat za citanje tekstura iz fajla. */
     image_done(image);
+}
+static void on_timer(int value){
+	if (value != 0)
+        return;
+
 }

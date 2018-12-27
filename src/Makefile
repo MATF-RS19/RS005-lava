@@ -1,4 +1,4 @@
-CFLAGS = -Wall -Wextra -std=c++11 -lglut -lGLU -lGL
+CFLAGS = -Wall -Wextra -std=c++17 -lglut -lGLU -lGL
 
 lava: main.o image.o
 	g++ $^ $(CFLAGS) -o $@
