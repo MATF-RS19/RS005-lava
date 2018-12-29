@@ -183,7 +183,7 @@ void Man::man_figure() const{
     }
 void Man::man_draw(){
         glPushMatrix();
-            glTranslatef(m_x_pos+0.0, m_y_pos, m_z_pos);
+            glTranslatef(m_x_pos, m_y_pos, m_z_pos);
             man_figure();
         glPopMatrix();	
         

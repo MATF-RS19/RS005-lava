@@ -7,10 +7,12 @@
 
 void Animation::jump_anim(){
         if(m_jump_ongoing==1){
+
             if(m_jumped<JUMP_LEN){
                 m_jumped+=.2;
+                
                 m_m.setZ(m_m.getZ()+.2);
-                m_m.setY(3 +(-4*JUMP_HEIGHT*m_jumped*m_jumped)/(JUMP_LEN*JUMP_LEN)+4*JUMP_HEIGHT*m_jumped/JUMP_LEN);
+                m_m.setY(3+(-4*JUMP_HEIGHT*m_jumped*m_jumped)/(JUMP_LEN*JUMP_LEN)+4*JUMP_HEIGHT*m_jumped/JUMP_LEN);
                 
             }
              else{

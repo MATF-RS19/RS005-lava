@@ -190,11 +190,12 @@ void initializeTexture(void)
 
 
 static void on_timer(int value){
-	if (value != 0)
+    if (value != 0)
         return;
     if(a.getJumpOngoing()==1){
         a.jump_anim();
     }
+    
     animation_stones+=0.01;
     if(animation_stones>=1){
         animation_stones=1;
@@ -205,6 +206,8 @@ static void on_timer(int value){
 	glutPostRedisplay();
 
     //ako je presao dovoljno prestaje da skace
-    glutTimerFunc(TIMER_INTERVAL, on_timer, 0);
+    if(a.getJumpOngoing()==1){
+        glutTimerFunc(TIMER_INTERVAL, on_timer, 0);
+    }
 
 }
