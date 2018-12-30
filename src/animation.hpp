@@ -9,20 +9,36 @@
 
 class Animation{
 public:
-	Animation(Man &m, std::vector<Stone> &s, int jump_ongoing=0, double jumped=0)
-		: m_m(m), m_s(s), m_jump_ongoing(jump_ongoing), m_jumped(jumped) {}
+	Animation(Man &m, std::vector<Stone> &s, int jump_ongoing=0, double jumped=0.0, int anim_stone=0, double stone=0.0, int pom=1)
+		: m_m(m), m_s(s), m_jump_ongoing(jump_ongoing), m_jumped(jumped), m_anim_stone(anim_stone), m_stone_speed(stone), m_pom(pom){}
+		
     void jump_anim();
-    int getJumpOngoing() const;
+    void animation_stone();
     
+    int getJumpOngoing() const;
     void setJumpOngoing(int j);
+    
     int getJumped() const;
     void setJumped(int j);
+    
+    int getStonemove() const;
+    void setStonemove(int j);
+    
+    double getStoneSpeed() const;
+    void setStoneSpeed(double j);
+    
     int getStoneSize() const;
 
 private:
- 	Man &m_m;
-	std::vector<Stone> m_s;
+    Man &m_m;
+    std::vector<Stone> &m_s;
     int m_jump_ongoing;
     double m_jumped;
+    
+    int m_pom;
+
+    
+    int m_anim_stone;
+    double m_stone_speed;
 };
 

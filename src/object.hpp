@@ -12,6 +12,13 @@ public:
     :m_x_pos(x_pos),m_y_pos(y_pos),m_z_pos(z_pos), m_speed(stone_speed),m_scale(scale){};
     
     void stone_draw() const;
+    void stone_figure() const;
+    void setX(double x);
+    void setY(double y);
+    void setZ(double z);
+    double getX() const;
+    double getY() const;
+    double getZ() const;
     
     friend class Animation;
 private:

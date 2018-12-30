@@ -2,17 +2,24 @@
 #include "object.hpp"
 #include "animation.hpp"
 
-
 void Stone::stone_draw() const{
+    glPushMatrix();
+            glTranslatef(m_x_pos,m_y_pos,m_z_pos);
+            stone_figure();
+    glPopMatrix();
+    
+}
+
+void Stone::stone_figure() const{
         glPushMatrix();
              glColor3f(0.5,0.5,0.4);
-             glTranslatef(m_x_pos,m_y_pos,m_z_pos);
+//              glTranslatef(m_x_pos,m_y_pos,m_z_pos);
              glScalef(2.5*m_scale,.3,2.5*m_scale);
              glutSolidCube(1);
         glPopMatrix();
         glPushMatrix();
             glColor3f(.6,0.6,0.5);
-            glTranslatef(m_x_pos,m_y_pos,m_z_pos);
+//             glTranslatef(m_x_pos,m_y_pos,m_z_pos);
             glScalef(2*m_scale,.4,2*m_scale);
             glutSolidCube(1);
          glPopMatrix();
@@ -75,6 +82,24 @@ void Island::island_figure(){
         glPopMatrix();
 }
 
+void Stone::setX(double x){
+    m_x_pos=x;
+}
+void Stone::setY(double y){
+    m_y_pos=y;
+}
+void Stone::setZ(double z){
+    m_z_pos=z;
+}
+double Stone::getX() const{
+    return m_x_pos;
+}
+double Stone::getY() const{
+    return m_y_pos;
+}
+double Stone::getZ() const{
+    return m_z_pos;
+}
 
 void Man::setX(double x){
     m_x_pos=x;
@@ -185,6 +210,6 @@ void Man::man_draw(){
         glPushMatrix();
             glTranslatef(m_x_pos, m_y_pos, m_z_pos);
             man_figure();
-        glPopMatrix();	
+        glPopMatrix();
         
     }

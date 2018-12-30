@@ -10,6 +10,8 @@
 
 #define LAVATEXTURE "lava.bmp"
 #define TIMER_INTERVAL 20
+#define TIMER_INTERVAL2 70
+
 #define JUMP_LEN 5
 #define JUMP_HEIGHT 2
 
@@ -23,19 +25,35 @@ static void on_keyboard(unsigned char key, int x , int y);
 static void initializeTexture(void);
 
 double animation_stones=0.0;
-int animation_ongoing=0;
+int pom = 1; 
 
 static void initializeTexture(void);
 
-Man man(0,3,-15);
+Man man(0, 3,-15);
 std::vector<Stone> stones;
 // Stone stone(0,0,0,1,1);
 Island i1(0, 0, -29);
 Island i2(0, 0, 29);
 Floor_ f(0, 0, 0);
-Animation a(man, stones, 0, 0);
+Animation a(man, stones, 0, 0, 0, 0, 1);
     
+static void initialize_stone(){
+     for (int i=0;i<5;i++)
+    {
+        if(i%2==0){
+            Stone stone(-10,0.0,i*5-10.0,0.1,1);
+            stones.push_back(stone);
+        }
+        else{
+            Stone stone(10,0.0,i*5-10.0,0.1,1);
+            stones.push_back(stone);      
+        }
+    }
+}
+
 int main(int argc, char** argv){
+    
+        initialize_stone();
 	//inicijalizujemo glut
 	glutInit(&argc, argv);
 	glutInitDisplayMode(GLUT_RGB | GLUT_DOUBLE | GLUT_DEPTH);
@@ -46,13 +64,13 @@ int main(int argc, char** argv){
 	glutCreateWindow(argv[0]);
 	
 	
-    glutReshapeFunc(on_reshape);
-    glutDisplayFunc(on_display);
-    glutKeyboardFunc(on_keyboard);
-    
+        glutReshapeFunc(on_reshape);
+        glutDisplayFunc(on_display);
+        glutKeyboardFunc(on_keyboard);
+        
     
 	glClearColor(0, 0, 0, 0);
-    glEnable(GL_DEPTH_TEST);    
+        glEnable(GL_DEPTH_TEST);    
 	glEnable(GL_NORMALIZE);
 	glEnable(GL_TEXTURE_2D);
 
@@ -113,20 +131,12 @@ void on_display(void){
     i1.island_draw();
     i2.island_draw();
     man.man_draw();
-    for (int i=0;i<5;i++)
-    {
-        if(i%2==0){
-            Stone stone(-10,0.0,i*5-10.0,0.1,1);
-            stones.push_back(stone);
-        }
-        else{
-            Stone stone(10,0.0,i*5-10.0,0.1,1);
-            stones.push_back(stone);      
-        }
-    }
+    
+    
     for (Stone stonee: stones){
         stonee.stone_draw();   
     }
+    
     
 	glutSwapBuffers();
 }
@@ -145,11 +155,13 @@ static void on_keyboard(unsigned char key, int x, int y){
        			glutTimerFunc(TIMER_INTERVAL, on_timer, 0);
             }
             break;
-        case 'o':
-            if(animation_ongoing==0){
-             animation_ongoing=1;
-             glutTimerFunc(TIMER_INTERVAL,on_timer, 0);
+        case 's':
+            if(a.getStonemove()==0){
+                a.setStonemove(1);
+                a.setStoneSpeed(0);
+                glutTimerFunc(TIMER_INTERVAL,on_timer, 1);
             }
+            
             break;
     }
 }
@@ -180,7 +192,7 @@ void initializeTexture(void)
     glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB,
                  image->width, image->height, 0,
                  GL_RGB, GL_UNSIGNED_BYTE, image->pixels);
-
+    
     /* Iskljucujemo aktivnu teksturu */
     glBindTexture(GL_TEXTURE_2D, 0);
 
@@ -190,24 +202,33 @@ void initializeTexture(void)
 
 
 static void on_timer(int value){
-    if (value != 0)
-        return;
-    if(a.getJumpOngoing()==1){
-        a.jump_anim();
-    }
-    
-    animation_stones+=0.01;
-    if(animation_stones>=1){
-        animation_stones=1;
-     animation_ongoing=0;   
-    }
-    
-	//ponovo se iscrtava prozor	
-	glutPostRedisplay();
+    if(value == 1){
+        
+        if(a.getStonemove()==1){
+            a.animation_stone();
+         
+        }
+        
+        glutPostRedisplay();
+        
+        if(a.getStonemove()==1){
+            glutTimerFunc(TIMER_INTERVAL2, on_timer, 1);
 
-    //ako je presao dovoljno prestaje da skace
-    if(a.getJumpOngoing()==1){
-        glutTimerFunc(TIMER_INTERVAL, on_timer, 0);
+        }
+    }
+    if (value == 0){
+        
+        if(a.getJumpOngoing()==1){
+            a.jump_anim();
+        }
+       
+        //ponovo se iscrtava prozor	
+        glutPostRedisplay();
+        if(a.getJumpOngoing()==1){
+            glutTimerFunc(TIMER_INTERVAL, on_timer, 0);
+
+        }
+        //ako je presao dovoljno prestaje da skace
     }
 
 }

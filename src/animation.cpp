@@ -25,6 +25,51 @@ void Animation::jump_anim(){
 
 }
 
+void Animation::animation_stone(){
+    
+        
+        if(m_anim_stone<=1){
+                       
+
+            m_stone_speed = 0.7;
+             
+            for(int i = 0; i<5; i++){
+                    if(i%2==0){
+                        m_s.at(i).setX(m_s.at(i).getX()+m_stone_speed*m_pom);
+                    }
+                    else{
+                        m_s.at(i).setX(m_s.at(i).getX()-m_stone_speed*m_pom);
+                    }   
+                
+            }
+            
+            if(m_s.at(0).getX() >= 14 || m_s.at(0).getX() <= -14){
+                m_pom = m_pom * (-1);
+            }
+          
+        }          
+        else{
+            m_stone_speed=0;
+        }
+
+}
+
+int Animation::getStonemove() const
+{
+        return m_anim_stone;
+}
+void Animation::setStonemove(int j){
+        m_anim_stone=j;
+}
+
+double Animation::getStoneSpeed() const
+{
+        return m_stone_speed;
+}
+void Animation::setStoneSpeed(double j){
+        m_stone_speed=j;
+}
+
 int Animation::getJumpOngoing() const
 {
         return m_jump_ongoing;
