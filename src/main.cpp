@@ -10,7 +10,7 @@
 
 #define LAVATEXTURE "lava.bmp"
 #define TIMER_INTERVAL 20
-#define TIMER_INTERVAL2 70
+#define TIMER_INTERVAL2 200
 
 #define JUMP_LEN 5
 #define JUMP_HEIGHT 2
@@ -35,20 +35,27 @@ std::vector<Stone> stones;
 Island i1(0, 0, -29);
 Island i2(0, 0, 29);
 Floor_ f(0, 0, 0);
-Animation a(man, stones, 0, 0, 0, 0, 1);
+Animation a(man, stones);
     
 static void initialize_stone(){
      for (int i=0;i<5;i++)
     {
         if(i%2==0){
-            Stone stone(-10,0.0,i*5-10.0,0.1,1);
+            Stone stone(-10,0.5,i*5-10.0,0.1,1);
             stones.push_back(stone);
         }
         else{
-            Stone stone(10,0.0,i*5-10.0,0.1,1);
+            Stone stone(10,0.5,i*5-10.0,0.1,1);
             stones.push_back(stone);      
         }
     }
+}
+
+void reset(){
+
+    printf("Potonuo\n");
+    exit(0);
+    return;
 }
 
 int main(int argc, char** argv){
@@ -95,16 +102,16 @@ void on_reshape(int width, int height) {
 
 void on_display(void){
 	
-	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-	
-	//podesavamo lookat
-	glMatrixMode(GL_MODELVIEW);
-    glLoadIdentity();
-	//iz svih uglova
-	gluLookAt(-30, 20, 0, 0, 0, 0, 0, 1, 0);
 
-	glColorMaterial(GL_FRONT_AND_BACK, GL_DIFFUSE);
-	glEnable(GL_COLOR_MATERIAL);
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    //podesavamo lookat
+
+    glMatrixMode(GL_MODELVIEW);
+    glLoadIdentity();
+    //iz svih uglova
+    gluLookAt(-30, 14, 0, 0, 0, 0, 0, 1, 0);
+    glColorMaterial(GL_FRONT_AND_BACK, GL_DIFFUSE);
+    glEnable(GL_COLOR_MATERIAL);
     f.f_draw(lava_texture);
     
     glEnable(GL_LIGHT0);
@@ -151,7 +158,6 @@ static void on_keyboard(unsigned char key, int x, int y){
             if(a.getJumpOngoing()==0){
                 a.setJumpOngoing(1);
                 a.setJumped(0);
-                std::cout<<a.getJumpOngoing()<<std::endl;
        			glutTimerFunc(TIMER_INTERVAL, on_timer, 0);
             }
             break;
@@ -204,10 +210,15 @@ void initializeTexture(void)
 static void on_timer(int value){
     if(value == 1){
         
+        if(man.getY()<=-2){
+            reset();  
+        }
+        
         if(a.getStonemove()==1){
             a.animation_stone();
-         
         }
+        
+        
         
         glutPostRedisplay();
         
@@ -220,8 +231,8 @@ static void on_timer(int value){
         
         if(a.getJumpOngoing()==1){
             a.jump_anim();
+            
         }
-       
         //ponovo se iscrtava prozor	
         glutPostRedisplay();
         if(a.getJumpOngoing()==1){

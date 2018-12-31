@@ -91,6 +91,9 @@ void Stone::setY(double y){
 void Stone::setZ(double z){
     m_z_pos=z;
 }
+void Stone::setScale(double z){
+    m_scale=z;
+}
 double Stone::getX() const{
     return m_x_pos;
 }
@@ -100,6 +103,11 @@ double Stone::getY() const{
 double Stone::getZ() const{
     return m_z_pos;
 }
+double Stone::getScale() const{
+    return m_scale;
+}
+
+
 
 void Man::setX(double x){
     m_x_pos=x;

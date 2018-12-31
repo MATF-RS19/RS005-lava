@@ -16,9 +16,11 @@ public:
     void setX(double x);
     void setY(double y);
     void setZ(double z);
+    void setScale(double s);
     double getX() const;
     double getY() const;
     double getZ() const;
+    double getScale() const;
     
     friend class Animation;
 private:
