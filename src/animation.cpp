@@ -53,12 +53,9 @@ void Animation::jump_anim(){
 }
 
 void Animation::animation_stone(){
-    
-        
+
         if(m_anim_stone<=1){
                        
-            
-            m_stone_speed = 0.7;
             
             if(pom_anim==1){
              m_m.setX(m_s.at(m_num).getX()); 
@@ -70,17 +67,23 @@ void Animation::animation_stone(){
             }
             for(int i = 0; i<5; i++){
                 
+                m_stone_speed = m_s.at(i).getStoneSpeed();
+                
                 if(i%2==0){
-                    m_s.at(i).setX(m_s.at(i).getX()+m_stone_speed*m_sign);
+                    if(m_s.at(i).getX() >= 14 || m_s.at(i).getX() <= -14){
+                    m_sign.at(i) = m_sign.at(i) * (-1);
+                }
+                    m_s.at(i).setX(m_s.at(i).getX()+m_stone_speed*m_sign.at(i));
                 }
                 else{
-                    m_s.at(i).setX(m_s.at(i).getX()-m_stone_speed*m_sign);
+                    if(m_s.at(i).getX() >= 14 || m_s.at(i).getX() <= -14){
+                    m_sign.at(i) = m_sign.at(i) * (-1);
+                }
+                    m_s.at(i).setX(m_s.at(i).getX()-m_stone_speed*m_sign.at(i));
                 }   
                     
-                }
-                if(m_s.at(0).getX() >= 14 || m_s.at(0).getX() <= -14){
-                    m_sign = m_sign * (-1);
-                }
+            }
+                
           
         }          
         else{
@@ -97,13 +100,6 @@ void Animation::setStonemove(int j){
         m_anim_stone=j;
 }
 
-double Animation::getStoneSpeed() const
-{
-        return m_stone_speed;
-}
-void Animation::setStoneSpeed(double j){
-        m_stone_speed=j;
-}
 
 int Animation::getJumpOngoing() const
 {

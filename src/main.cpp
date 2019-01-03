@@ -1,5 +1,6 @@
 #include <GL/glut.h>
 #include <iostream>
+#include <fstream>
 #include <vector>
 #include <iterator>
 #include <algorithm>
@@ -43,25 +44,7 @@ Island i2(0, 0, 29);
 Floor_ f(0, 0, 0);
 Animation a(man, stones);
 
-class myFile {
-public:
-    myFile(const char* filename)
-    : m_file(std::fopen(filename, "r")){
-        
-        if(m_file == NULL){
-            exit(1);
-        }
-    }
 
-    ~myFile()
-    {
-        std::fclose(m_file);
-    }
-
-private:
-    std::FILE * m_file;
-
-};
 
 int main(int argc, char** argv){
     
@@ -171,7 +154,6 @@ static void on_keyboard(unsigned char key, int x, int y){
         case 's':
             if(a.getStonemove()==0){
                 a.setStonemove(1);
-                a.setStoneSpeed(0);
                 glutTimerFunc(TIMER_INTERVAL,on_timer, 1);
             }
             
@@ -183,10 +165,12 @@ static void initialize_stone(){
      for (int i=0;i<5;i++)
     {
         if(i%2==0){
+            std::cout<<stoneSpeed.at(i);
             Stone stone(-10,0.5,i*5-10.0,stoneSpeed.at(i),1);
             stones.push_back(stone);
         }
         else{
+            std::cout<<stoneSpeed.at(i);
             Stone stone(10,0.5,i*5-10.0,stoneSpeed.at(i),1);
             stones.push_back(stone);      
         }
@@ -240,18 +224,24 @@ void readLevel(){
     
     std::cout<< level <<std::endl;
     
-    myFile file(level.c_str());
     
-    /*std::istream_iterator<double> start(file), end;
-    stoneSpeed(start, end);*/
     
-    double tmp;
-    
-    for(int i = 0; i<5; i++){
-        //file >> tmp;
-        stoneSpeed.push_back(0.1);
+    std::ifstream ifile(level.c_str(), std::ios::in);
+    if(!ifile.is_open()){
+        std::cerr << "There was a problem opening the input file!\n";
+        exit(1);
     }
     
+    double num = 0.0;
+    
+    while(ifile >> num){
+        stoneSpeed.push_back(num);
+    }
+    
+    /*for (int i = 0; i < 5; ++i) {
+        std::cout << stoneSpeed[i] << std::endl;
+    }
+    */
 }
 
 

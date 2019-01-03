@@ -107,6 +107,10 @@ double Stone::getScale() const{
     return m_scale;
 }
 
+double Stone::getStoneSpeed() const{
+     return m_speed;
+}
+
 
 
 void Man::setX(double x){

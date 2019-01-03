@@ -21,6 +21,7 @@ public:
     double getY() const;
     double getZ() const;
     double getScale() const;
+    double getStoneSpeed() const;
     
     friend class Animation;
 private:
