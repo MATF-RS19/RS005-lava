@@ -23,9 +23,14 @@ static void on_reshape(int width, int height);
 static void on_display(void);
 static void on_keyboard(unsigned char key, int x , int y);
 static void initializeTexture(void);
+static void initialize_stone();
+void reset();
+static void readLevel();
+
 
 double animation_stones=0.0;
 int pom = 1; 
+int lvl = 0;
 
 static void initializeTexture(void);
 
@@ -36,30 +41,31 @@ Island i1(0, 0, -29);
 Island i2(0, 0, 29);
 Floor_ f(0, 0, 0);
 Animation a(man, stones);
-    
-static void initialize_stone(){
-     for (int i=0;i<5;i++)
-    {
-        if(i%2==0){
-            Stone stone(-10,0.5,i*5-10.0,0.1,1);
-            stones.push_back(stone);
-        }
-        else{
-            Stone stone(10,0.5,i*5-10.0,0.1,1);
-            stones.push_back(stone);      
+
+class myFile {
+public:
+    myFile(const char* filename)
+    : m_file(std::fopen(filename, "r")){
+        
+        if(m_file == NULL){
+            exit(1);
         }
     }
-}
 
-void reset(){
+    ~myFile()
+    {
+        std::fclose(m_file);
+    }
 
-    printf("Potonuo\n");
-    exit(0);
-    return;
-}
+private:
+    std::FILE * m_file;
+
+};
 
 int main(int argc, char** argv){
     
+        readLevel();
+
         initialize_stone();
 	//inicijalizujemo glut
 	glutInit(&argc, argv);
@@ -172,7 +178,26 @@ static void on_keyboard(unsigned char key, int x, int y){
     }
 }
 
+static void initialize_stone(){
+     for (int i=0;i<5;i++)
+    {
+        if(i%2==0){
+            Stone stone(-10,0.5,i*5-10.0,0.1,1);
+            stones.push_back(stone);
+        }
+        else{
+            Stone stone(10,0.5,i*5-10.0,0.1,1);
+            stones.push_back(stone);      
+        }
+    }
+}
 
+void reset(){
+
+    printf("Potonuo\n");
+    exit(0);
+    return;
+}
 
 
 void initializeTexture(void)
@@ -204,6 +229,18 @@ void initializeTexture(void)
 
     /* Unistava se objekat za citanje tekstura iz fajla. */
     image_done(image);
+}
+
+void readLevel(){
+    
+    lvl+=1;
+    
+    std::string level = "lvl" + std::to_string(lvl);
+    
+    std::cout<< level <<std::endl;
+    
+    myFile file(level.c_str());
+    
 }
 
 
