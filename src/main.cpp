@@ -36,6 +36,7 @@ static void initializeTexture(void);
 
 Man man(0, 3,-15);
 std::vector<Stone> stones;
+std::vector<double> stoneSpeed;
 // Stone stone(0,0,0,1,1);
 Island i1(0, 0, -29);
 Island i2(0, 0, 29);
@@ -182,11 +183,11 @@ static void initialize_stone(){
      for (int i=0;i<5;i++)
     {
         if(i%2==0){
-            Stone stone(-10,0.5,i*5-10.0,0.1,1);
+            Stone stone(-10,0.5,i*5-10.0,stoneSpeed.at(i),1);
             stones.push_back(stone);
         }
         else{
-            Stone stone(10,0.5,i*5-10.0,0.1,1);
+            Stone stone(10,0.5,i*5-10.0,stoneSpeed.at(i),1);
             stones.push_back(stone);      
         }
     }
@@ -240,6 +241,16 @@ void readLevel(){
     std::cout<< level <<std::endl;
     
     myFile file(level.c_str());
+    
+    /*std::istream_iterator<double> start(file), end;
+    stoneSpeed(start, end);*/
+    
+    double tmp;
+    
+    for(int i = 0; i<5; i++){
+        //file >> tmp;
+        stoneSpeed.push_back(0.1);
+    }
     
 }
 
