@@ -11,7 +11,7 @@
 
 #define LAVATEXTURE "lava.bmp"
 #define TIMER_INTERVAL 20
-#define TIMER_INTERVAL2 200
+#define TIMER_INTERVAL2 100
 
 #define JUMP_LEN 5
 #define JUMP_HEIGHT 2
@@ -145,10 +145,12 @@ static void on_keyboard(unsigned char key, int x, int y){
             exit(0);
             break;
         case 'j':
-            if(a.getJumpOngoing()==0){
-                a.setJumpOngoing(1);
-                a.setJumped(0);
-       			glutTimerFunc(TIMER_INTERVAL, on_timer, 0);
+            if(a.getStonemove()==1){
+                if(a.getJumpOngoing()==0){
+                    a.setJumpOngoing(1);
+                    a.setJumped(0);
+                    glutTimerFunc(TIMER_INTERVAL, on_timer, 0);
+                }
             }
             break;
         case 's':
@@ -157,6 +159,11 @@ static void on_keyboard(unsigned char key, int x, int y){
                 glutTimerFunc(TIMER_INTERVAL,on_timer, 1);
             }
             
+            break;
+        case 'p':
+            if(a.getStonemove()==1){
+                a.setStonemove(0);
+            }
             break;
     }
 }
