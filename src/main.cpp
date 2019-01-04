@@ -11,7 +11,7 @@
 
 #define LAVATEXTURE "lava.bmp"
 #define TIMER_INTERVAL 20
-#define TIMER_INTERVAL2 100
+#define TIMER_INTERVAL2 200
 
 #define JUMP_LEN 5
 #define JUMP_HEIGHT 2
@@ -38,6 +38,7 @@ static void initializeTexture(void);
 Man man(0, 3,-15);
 std::vector<Stone> stones;
 std::vector<double> stoneSpeed;
+std::vector<double> stoneScale;
 // Stone stone(0,0,0,1,1);
 Island i1(0, 0, -29);
 Island i2(0, 0, 29);
@@ -173,12 +174,12 @@ static void initialize_stone(){
     {
         if(i%2==0){
             std::cout<<stoneSpeed.at(i);
-            Stone stone(-10,0.5,i*5-10.0,stoneSpeed.at(i),1);
+            Stone stone(-10,0.5,i*5-10.0,stoneSpeed.at(i),stoneScale.at(i));
             stones.push_back(stone);
         }
         else{
             std::cout<<stoneSpeed.at(i);
-            Stone stone(10,0.5,i*5-10.0,stoneSpeed.at(i),1);
+            Stone stone(10,0.5,i*5-10.0,stoneSpeed.at(i),stoneScale.at(i));
             stones.push_back(stone);      
         }
     }
@@ -240,15 +241,13 @@ void readLevel(){
     }
     
     double num = 0.0;
-    
+    double num2=0.0;
     while(ifile >> num){
         stoneSpeed.push_back(num);
+        if(ifile>>num2){
+            stoneScale.push_back(num2);
+        }
     }
-    
-    /*for (int i = 0; i < 5; ++i) {
-        std::cout << stoneSpeed[i] << std::endl;
-    }
-    */
 }
 
 
