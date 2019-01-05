@@ -146,7 +146,7 @@ static void on_keyboard(unsigned char key, int x, int y){
             exit(0);
             break;
         case 'j':
-            if(man.getY()==3){
+            if(a.getPomAnim()!=2){
                 if(a.getStonemove()==1){
                     if(a.getJumpOngoing()==0){
                         a.setJumpOngoing(1);
@@ -189,24 +189,26 @@ static void initialize_stone(){
 
 void reset(){
 
+
     printf("Potonuo\n");
     a.setJumpOngoing(0);
     man.setX(0);
     man.setY(3);
     man.setZ(-15);
-    pom_anim=0;
+    a.setPomAnim(0);
+    a.setNum(-1);
     
     a.setStonemove(0);
     for (int i=0;i<5;i++)
     {
         if(i%2==0){
             //std::cout<<stoneSpeed.at(i);
-            Stone stone(-10,0.5,i*5-10.0,stoneSpeed.at(i),stoneScale.at(i));
+            Stone stone(-10,0.5,i*5-10.0,stoneSpeed.at(i),1);
             stones[i]=stone;
         }
         else{
             //std::cout<<stoneSpeed.at(i);
-            Stone stone(10,0.5,i*5-10.0,stoneSpeed.at(i),stoneScale.at(i));
+            Stone stone(10,0.5,i*5-10.0,stoneSpeed.at(i),1);
             stones[i]=stone;
         }
     }
@@ -310,3 +312,7 @@ static void on_timer(int value){
     }
 
 }
+
+
+
+

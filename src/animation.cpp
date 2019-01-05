@@ -4,7 +4,6 @@
 #define JUMP_LEN 5
 #define JUMP_HEIGHT 2
 
-int pom_anim=0;
 float potapanje=0;
 void Animation::jump_anim(){
         if(m_jump_ongoing==1){
@@ -24,12 +23,12 @@ void Animation::jump_anim(){
                     if((m_m.getX()<=(m_s.at(m_num).getX()) +2.5*m_s.at(m_num).getScale()/2)  && 
                     (m_m.getX()>=(m_s.at(m_num).getX()- 2.5*m_s.at(m_num).getScale()/2))  
                     ){
-                        pom_anim=1;
+                        m_pom_anim=1;
                     }
                     
                     else{
                         
-                        pom_anim=2;
+                        m_pom_anim=2;
                     
                     }
                     m_jump_ongoing=0;
@@ -37,7 +36,7 @@ void Animation::jump_anim(){
                      
                 }
                 else{
-                    pom_anim=false;
+                    m_pom_anim=0;
                     m_num=-1;
                     m_jump_ongoing=0;
                 }
@@ -57,10 +56,10 @@ void Animation::animation_stone(){
         if(m_anim_stone<=1){
                        
             
-            if(pom_anim==1){
+            if(m_pom_anim==1){
              m_m.setX(m_s.at(m_num).getX()); 
             }
-            if(pom_anim==2){
+            if(m_pom_anim == 2){
                 potapanje+=0.1;
                 m_m.setY(m_m.getY()-potapanje);   
               
@@ -119,7 +118,18 @@ void Animation::setJumped(int j){
 int Animation::getStoneSize() const{
      return m_s.size();   
 }
-
-
+int Animation::getNum() const{
+    return m_num;
+}
+void Animation::setNum(int j){
+        m_num=j;
+}
+int Animation::getPomAnim() const
+{
+        return m_pom_anim;
+}
+void Animation::setPomAnim(int j){
+        m_pom_anim=j;
+}
 
 
