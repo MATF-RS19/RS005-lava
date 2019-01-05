@@ -31,13 +31,12 @@ void Animation::jump_anim(){
                         m_pom_anim=2;
                     
                     }
+                    
                     m_jump_ongoing=0;
-                
                      
                 }
                 else{
                     m_pom_anim=0;
-                    m_num=-1;
                     m_jump_ongoing=0;
                 }
             }

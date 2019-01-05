@@ -175,12 +175,10 @@ static void initialize_stone(){
      for (int i=0;i<5;i++)
     {
         if(i%2==0){
-            std::cout<<stoneSpeed.at(i);
             Stone stone(-10,0.5,i*5-10.0,stoneSpeed.at(i),stoneScale.at(i));
             stones.push_back(stone);
         }
         else{
-            std::cout<<stoneSpeed.at(i);
             Stone stone(10,0.5,i*5-10.0,stoneSpeed.at(i),stoneScale.at(i));
             stones.push_back(stone);      
         }
@@ -197,6 +195,7 @@ void reset(){
     man.setZ(-15);
     a.setPomAnim(0);
     a.setNum(-1);
+    
     
     a.setStonemove(0);
     for (int i=0;i<5;i++)
@@ -251,14 +250,15 @@ void initializeTexture(void)
 
 void readLevel(){
     
+    stoneSpeed.clear();
+    stoneScale.clear();
+    
     lvl+=1;
     
     std::string level = "lvl" + std::to_string(lvl);
     
-    std::cout<< level <<std::endl;
-    
-    
-    
+    std::cout<<level<<std::endl;
+        
     std::ifstream ifile(level.c_str(), std::ios::in);
     if(!ifile.is_open()){
         std::cerr << "There was a problem opening the input file!\n";
@@ -301,6 +301,14 @@ static void on_timer(int value){
         if(a.getJumpOngoing()==1){
             a.jump_anim();
             
+        }
+        
+        if(a.getNum()==5){
+            std::cout<<"POBEDA"<<std::endl;
+           
+            readLevel();            
+            reset();
+
         }
         //ponovo se iscrtava prozor	
         glutPostRedisplay();
