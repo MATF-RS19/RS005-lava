@@ -146,11 +146,13 @@ static void on_keyboard(unsigned char key, int x, int y){
             exit(0);
             break;
         case 'j':
-            if(a.getStonemove()==1){
-                if(a.getJumpOngoing()==0){
-                    a.setJumpOngoing(1);
-                    a.setJumped(0);
-                    glutTimerFunc(TIMER_INTERVAL, on_timer, 0);
+            if(man.getY()==3){
+                if(a.getStonemove()==1){
+                    if(a.getJumpOngoing()==0){
+                        a.setJumpOngoing(1);
+                        a.setJumped(0);
+                        glutTimerFunc(TIMER_INTERVAL, on_timer, 0);
+                    }
                 }
             }
             break;
