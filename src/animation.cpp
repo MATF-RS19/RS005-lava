@@ -25,6 +25,7 @@ void Animation::jump_anim(){
                     (m_m.getX()>=(m_s.at(m_num).getX()- 2.5*m_s.at(m_num).getScale()/2))  
                     ){
                         m_pom_anim=1;
+                        m_score_num=m_score_num+(m_num*m_m.getLifeNum());
                     }
                     
                     else{
@@ -131,5 +132,11 @@ int Animation::getPomAnim() const
 void Animation::setPomAnim(int j){
         m_pom_anim=j;
 }
-
+float Animation::getScore() const{
+ return m_score_num;   
+}
+void Animation::setScore(float score){
+ m_score_num=score;   
+}
+    
 

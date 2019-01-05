@@ -49,9 +49,8 @@ Animation a(man, stones);
 
 int main(int argc, char** argv){
     
-        readLevel();
-
-        initialize_stone();
+    readLevel();
+    initialize_stone();
 	//inicijalizujemo glut
 	glutInit(&argc, argv);
 	glutInitDisplayMode(GLUT_RGB | GLUT_DOUBLE | GLUT_DEPTH);
@@ -61,14 +60,13 @@ int main(int argc, char** argv){
 	glutInitWindowPosition(0, 0);
 	glutCreateWindow(argv[0]);
 	
-	
-        glutReshapeFunc(on_reshape);
-        glutDisplayFunc(on_display);
-        glutKeyboardFunc(on_keyboard);
+    glutReshapeFunc(on_reshape);
+    glutDisplayFunc(on_display);    
+    glutKeyboardFunc(on_keyboard);
         
     
 	glClearColor(0, 0, 0, 0);
-        glEnable(GL_DEPTH_TEST);    
+    glEnable(GL_DEPTH_TEST);    
 	glEnable(GL_NORMALIZE);
 	glEnable(GL_TEXTURE_2D);
 
@@ -143,6 +141,7 @@ void on_display(void){
 static void on_keyboard(unsigned char key, int x, int y){
     switch(key){
         case 27:
+            std::cout<<"Score: "<<a.getScore()<<std::endl;
             exit(0);
             break;
         case 'j':
@@ -187,10 +186,12 @@ static void initialize_stone(){
 
 void reset(){
 
-    if(man.getLifeNum()<=0){
-     lvl=0;
-     man.setLifeNum(3);
-     readLevel();
+    if(man.getLifeNum()<=0 || lvl==3){
+        std::cout<<"Score :"<< a.getScore()<<std::endl;
+        lvl=0;
+        a.setScore(0);
+        man.setLifeNum(3);
+        readLevel();
     }
 
     

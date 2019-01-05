@@ -9,9 +9,9 @@
 
 class Animation{
 public:
-	Animation(Man &m, std::vector<Stone> &s, int jump_ongoing=0, double jumped=0.0, int anim_stone=0, double stone=0.0, int num = -1,  int pom_anim=0)
+	Animation(Man &m, std::vector<Stone> &s, int jump_ongoing=0, double jumped=0.0, int anim_stone=0, double stone=0.0, int num = -1,  int pom_anim=0,float score_num=0.0)
  		: m_m(m), m_s(s), m_jump_ongoing(jump_ongoing), m_jumped(jumped), m_anim_stone(anim_stone), m_stone_speed(stone),  m_num(num),
-                m_pom_anim(pom_anim){
+                m_pom_anim(pom_anim),m_score_num(score_num){
                     
                     std::vector<int> sign(5, 1);
                     m_sign = sign;
@@ -37,8 +37,11 @@ public:
     int getNum() const;
     void setNum(int j);
 
-      int getPomAnim() const;
+    int getPomAnim() const;
     void setPomAnim(int j);
+    
+    float getScore() const ;
+    void setScore(float score);
     
 
 private:
@@ -51,5 +54,7 @@ private:
     double m_stone_speed;
     int m_num;
     int m_pom_anim;
+    
+    float m_score_num;
 };
 
