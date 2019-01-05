@@ -188,7 +188,27 @@ static void initialize_stone(){
 void reset(){
 
     printf("Potonuo\n");
-    exit(0);
+    man.setX(0);
+    man.setY(3);
+    man.setZ(-15);
+    
+    
+    a.setStonemove(0);
+    for (int i=0;i<5;i++)
+    {
+        if(i%2==0){
+            //std::cout<<stoneSpeed.at(i);
+            Stone stone(-10,0.5,i*5-10.0,stoneSpeed.at(i),stoneScale.at(i));
+            stones[i]=stone;
+        }
+        else{
+            //std::cout<<stoneSpeed.at(i);
+            Stone stone(10,0.5,i*5-10.0,stoneSpeed.at(i),stoneScale.at(i));
+            stones[i]=stone;
+        }
+    }
+
+    //exit(0);
     return;
 }
 
