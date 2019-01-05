@@ -203,12 +203,12 @@ void reset(){
     {
         if(i%2==0){
             //std::cout<<stoneSpeed.at(i);
-            Stone stone(-10,0.5,i*5-10.0,stoneSpeed.at(i),1);
+            Stone stone(-10,0.5,i*5-10.0,stoneSpeed.at(i),stoneScale.at(i));
             stones[i]=stone;
         }
         else{
             //std::cout<<stoneSpeed.at(i);
-            Stone stone(10,0.5,i*5-10.0,stoneSpeed.at(i),1);
+            Stone stone(10,0.5,i*5-10.0,stoneSpeed.at(i),stoneScale.at(i));
             stones[i]=stone;
         }
     }
