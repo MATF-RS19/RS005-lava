@@ -65,8 +65,8 @@ private:
 
 class Man{
 public:
-    Man(double x_pos, double y_pos, double z_pos)
-    :m_x_pos(x_pos), m_y_pos(y_pos), m_z_pos(z_pos) 
+    Man(double x_pos, double y_pos, double z_pos,int life_num=3)
+    :m_x_pos(x_pos), m_y_pos(y_pos), m_z_pos(z_pos) , m_life_num(life_num)
     {};
   
     void setX(double x);
@@ -75,10 +75,13 @@ public:
     double getX() const;
     double getY() const;
     double getZ() const;
+    int getLifeNum() const;
+    void setLifeNum(int life);
     void man_figure() const;
     void man_draw();
     friend class Animation;
     
 private:
     double m_x_pos, m_y_pos, m_z_pos;
+    int m_life_num;
 };

@@ -4,6 +4,7 @@
 #define JUMP_LEN 5
 #define JUMP_HEIGHT 2
 
+
 float potapanje=0;
 void Animation::jump_anim(){
         if(m_jump_ongoing==1){
@@ -27,7 +28,7 @@ void Animation::jump_anim(){
                     }
                     
                     else{
-                        
+                        m_m.setLifeNum(m_m.getLifeNum()-1);
                         m_pom_anim=2;
                     
                     }

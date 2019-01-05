@@ -18,6 +18,8 @@
 
 GLuint lava_texture;
 extern int pom_anim;
+int lvl = 0;
+extern int life_num=3;
 
 static void on_timer(int value);
 static void on_reshape(int width, int height);
@@ -31,11 +33,9 @@ static void readLevel();
 
 double animation_stones=0.0;
 int pom = 1; 
-int lvl = 0;
-
 static void initializeTexture(void);
 
-Man man(0, 3,-15);
+Man man(0, 3,-15,life_num);
 std::vector<Stone> stones;
 std::vector<double> stoneSpeed;
 std::vector<double> stoneScale;
@@ -187,12 +187,18 @@ static void initialize_stone(){
 
 void reset(){
 
+    if(man.getLifeNum()<=0){
+     lvl=0;
+     man.setLifeNum(3);
+     readLevel();
+    }
 
-    printf("Potonuo\n");
+    
     a.setJumpOngoing(0);
     man.setX(0);
     man.setY(3);
     man.setZ(-15);
+    man.setLifeNum(man.getLifeNum());
     a.setPomAnim(0);
     a.setNum(-1);
     
@@ -211,8 +217,6 @@ void reset(){
             stones[i]=stone;
         }
     }
-
-    //exit(0);
     return;
 }
 
@@ -308,7 +312,6 @@ static void on_timer(int value){
            
             readLevel();            
             reset();
-
         }
         //ponovo se iscrtava prozor	
         glutPostRedisplay();

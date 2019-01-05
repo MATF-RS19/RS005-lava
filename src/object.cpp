@@ -131,6 +131,12 @@ double Man::getY() const{
 double Man::getZ() const{
     return m_z_pos;
 }
+int Man::getLifeNum() const{
+    return m_life_num;
+}
+void Man::setLifeNum(int life){
+    m_life_num=life;
+}
 void Man::man_figure() const{
     
      glPushMatrix();    
