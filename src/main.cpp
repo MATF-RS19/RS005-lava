@@ -17,7 +17,7 @@
 #define JUMP_HEIGHT 2
 
 GLuint lava_texture;
-
+extern int pom_anim;
 
 static void on_timer(int value);
 static void on_reshape(int width, int height);
@@ -188,10 +188,11 @@ static void initialize_stone(){
 void reset(){
 
     printf("Potonuo\n");
+    a.setJumpOngoing(0);
     man.setX(0);
     man.setY(3);
     man.setZ(-15);
-    
+    pom_anim=0;
     
     a.setStonemove(0);
     for (int i=0;i<5;i++)
