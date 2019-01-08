@@ -229,5 +229,59 @@ void Man::man_draw(){
             glTranslatef(m_x_pos, m_y_pos, m_z_pos);
             man_figure();
         glPopMatrix();
-        
-    }
+}
+
+/* detelinka */
+void Bonus::bonus_figure() const {
+  
+    glPushMatrix();
+        glColor3f(0,1,0);
+         glScalef(0.1,0.3,0.1);
+        glutSolidSphere(1,50,50);
+    glPopMatrix();
+
+    glPushMatrix();
+        glColor3f(0,1,0);
+        glutSolidSphere(0.2,50,50);
+    glPopMatrix();
+    
+     glPushMatrix();
+         glColor3f(0,1,0);
+         glTranslatef(0.1,0.3,0);
+         glutSolidSphere(0.2,50,50);
+     glPopMatrix();
+    
+    
+    glPushMatrix();
+        glColor3f(0,1,0);
+        glTranslatef(-0.1,0.3,0);
+        glutSolidSphere(0.2,50,50);
+    glPopMatrix();
+    
+    glPushMatrix();
+        glColor3f(0,1,0);
+        glTranslatef(-0.1,0,0);
+        glutSolidSphere(0.2,50,50);
+    glPopMatrix();
+    
+}
+
+void Bonus::bonus_draw(){
+        glPushMatrix();
+            glTranslatef(m_x_pos, m_y_pos,m_z_pos);
+            bonus_figure();
+        glPopMatrix();
+}
+
+
+void Bonus::setX(double x){
+    m_x_pos=x;
+}
+ 
+void Bonus::setY(double y){
+    m_y_pos=y;    
+}
+void Bonus::setZ(double z){
+    m_z_pos=z;
+}
+    

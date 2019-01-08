@@ -4,6 +4,8 @@
 #include <vector>
 #include <iterator>
 #include <algorithm>
+#include <experimental/random>
+
 
 #include "image.h"
 #include "animation.hpp"
@@ -19,7 +21,9 @@
 GLuint lava_texture;
 extern int pom_anim;
 int lvl = 0;
+int random_num;
 extern int life_num=3;
+float x,y,z;
 
 static void on_timer(int value);
 static void on_reshape(int width, int height);
@@ -44,8 +48,7 @@ Island i1(0, 0, -29);
 Island i2(0, 0, 29);
 Floor_ f(0, 0, 0);
 Animation a(man, stones);
-
-
+Bonus b(random_num,1.5,random_num);
 
 int main(int argc, char** argv){
     
@@ -98,7 +101,7 @@ void on_display(void){
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
     //iz svih uglova
-    gluLookAt(-30, 14, 0, 0, 0, 0, 0, 1, 0);
+    gluLookAt(-30, 17, 0, 0, 0, 0, 0, 1, 0);
     glColorMaterial(GL_FRONT_AND_BACK, GL_DIFFUSE);
     glEnable(GL_COLOR_MATERIAL);
     f.f_draw(lava_texture);
@@ -132,8 +135,9 @@ void on_display(void){
     for (Stone stonee: stones){
         stonee.stone_draw();   
     }
-    
-    
+    if(lvl==2){
+        b.bonus_draw();
+    }
 	glutSwapBuffers();
 }
 
@@ -173,16 +177,27 @@ static void on_keyboard(unsigned char key, int x, int y){
 static void initialize_stone(){
      for (int i=0;i<5;i++)
     {
+
         if(i%2==0){
             Stone stone(-10,0.5,i*5-10.0,stoneSpeed.at(i),stoneScale.at(i));
             stones.push_back(stone);
+            if(random_num==i){
+                b.setX(-10);
+                b.setZ(i*5-10.0);
+            }
         }
         else{
-            Stone stone(10,0.5,i*5-10.0,stoneSpeed.at(i),stoneScale.at(i));
+            Stone stone(10,0.5,i*5-10.0,stoneSpeed.at(i),stoneScale.at(i));        
             stones.push_back(stone);      
+                if(random_num==i){
+                    b.setX(10);
+                    b.setZ(i*5-10.0);
+                }        
         }
+        
     }
 }
+
 
 void reset(){
 
@@ -207,6 +222,7 @@ void reset(){
     a.setStonemove(0);
     for (int i=0;i<5;i++)
     {
+        
         if(i%2==0){
             //std::cout<<stoneSpeed.at(i);
             Stone stone(-10,0.5,i*5-10.0,stoneSpeed.at(i),stoneScale.at(i));
@@ -214,7 +230,9 @@ void reset(){
         }
         else{
             //std::cout<<stoneSpeed.at(i);
+            
             Stone stone(10,0.5,i*5-10.0,stoneSpeed.at(i),stoneScale.at(i));
+            
             stones[i]=stone;
         }
     }
@@ -260,10 +278,17 @@ void readLevel(){
     
     lvl+=1;
     
+    
+    if(lvl==2){
+        random_num= std::experimental::randint(0,4);
+        std::cout<<random_num<<std::endl;
+    }
+    
     std::string level = "lvl" + std::to_string(lvl);
     
     std::cout<<level<<std::endl;
-        
+    
+    
     std::ifstream ifile(level.c_str(), std::ios::in);
     if(!ifile.is_open()){
         std::cerr << "There was a problem opening the input file!\n";

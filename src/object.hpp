@@ -85,3 +85,20 @@ private:
     double m_x_pos, m_y_pos, m_z_pos;
     int m_life_num;
 };
+
+class Bonus{
+public:  
+    Bonus(double x_pos, double y_pos, double z_pos)
+    :m_x_pos(x_pos),m_y_pos(y_pos), m_z_pos(z_pos){};
+    
+    void bonus_figure() const ;
+    void bonus_draw();
+    
+    void setX(double x);
+    void setY(double x);
+    void setZ(double x);
+    
+    friend class Animation;
+private:
+    double m_x_pos,m_y_pos, m_z_pos;
+};
