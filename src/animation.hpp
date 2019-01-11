@@ -56,7 +56,6 @@ private:
     double m_stone_speed;
     int m_num;
     int m_pom_anim;
-    
     float m_score_num;
 };
 

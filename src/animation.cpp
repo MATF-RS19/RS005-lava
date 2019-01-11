@@ -18,16 +18,17 @@ void Animation::jump_anim(){
              else{  
                  m_num += 1;
                  if(m_num<=4){
-                    if((m_m.getX()<=(m_s.at(m_num).getX()) +2.5*m_s.at(m_num).getScale()/2)  && 
-                    (m_m.getX()>=(m_s.at(m_num).getX()- 2.5*m_s.at(m_num).getScale()/2))  
-                    ){
-                        /*cuvamo redni broj ostrva gde je covek skocio. */
-                        m_m.setNumStone(m_num);
+                     if((m_m.getX()<=(m_s.at(m_num).getX()) +2.5*m_s.at(m_num).getScale()/2)  && 
+                     (m_m.getX()>=(m_s.at(m_num).getX()- 2.5*m_s.at(m_num).getScale()/2))  
+                     ){
+                         
                         m_pom_anim=1;
+                        /*dodajemo dobijene poene. */
                         m_score_num=m_score_num+(m_num*m_m.getLifeNum());
                     
                     }
                     else{
+                        /*smanjujemo broj zivota za 1 ukoliko nije preziveo.*/
                         m_m.setLifeNum(m_m.getLifeNum()-1);
                         m_pom_anim=2;
                     
@@ -37,6 +38,7 @@ void Animation::jump_anim(){
                      
                 }
                 else{
+                    nestanak=0;
                     m_pom_anim=0;
                     m_jump_ongoing=0;
                 }
@@ -59,13 +61,16 @@ void Animation::animation_stone(){
             if(m_pom_anim==1){
                 /*koordinata x coveka prati koordinatu x ostrva. */
                 m_m.setX(m_s.at(m_num).getX()); 
-                /*ukoliko je x koordinata bonusa== x koordinati coveka povecavamo zivot za 1 i bonus treba da nestane. */
-                if(m_m.getX()==m_b.getX() && m_b.getNumStone()==m_m.getNumStone()){
-                    m_m.setLifeNum(m_m.getLifeNum()+1);                    
+                
+                /*ukoliko su z i x koordinata bonusa== z i x koordinati coveka povecavamo zivot za 1 i bonus treba da nestane. */
+                if(std::abs(m_b.getZ()-m_m.getZ())<=0.01 && std::abs(m_m.getX()-m_b.getX())<=0.1){
+                    m_m.setLifeNum(m_m.getLifeNum()+1);
+
+                                        
                     std::cout<<"LIFE: "<<m_m.getLifeNum()<<std::endl;   
                     m_b.setY(-1);
                     m_b.setX(-15);
-                    m_b.setNumStone(-1);
+                    nestanak=0.5;
                     
                 }
                 /*posle odredjenog vremena bonus promeni svoje mesto */
@@ -73,16 +78,17 @@ void Animation::animation_stone(){
                 if(nestanak>=1){                        
                 /*ponovo biramo ostrvo na kome ce da se pojavi bonus */
                     int random_n=std::experimental::randint(0,4);
+//                     std::cout<<"randint: "<< random_n<<std::endl;
                     m_b.setX(m_s.at(random_n).getX());
+                    m_b.setY(1.5);
                     m_b.setZ(m_s.at(random_n).getZ());
-                    std::cout<<"Rand "<<random_n<<std::endl;
-                    m_b.setNumStone(random_n);
                     nestanak=0;
                 }
                 
              
             }
             if(m_pom_anim == 2){
+                nestanak=0;
                 potapanje+=0.1;
                 m_m.setY(m_m.getY()-potapanje);   
               
@@ -92,13 +98,14 @@ void Animation::animation_stone(){
                 m_stone_speed = m_s.at(i).getStoneSpeed();
                 
                 if(i%2==0){
-                    if(m_s.at(i).getX() >= 14 || m_s.at(i).getX() <= -14){
+                    if(std::abs(m_s.at(i).getX())>=14){
+//                     if(m_s.at(i).getX() >= 14 || m_s.at(i).getX() <= -14){
                         m_sign.at(i) = m_sign.at(i) * (-1);
                 }
                     m_s.at(i).setX(m_s.at(i).getX()+m_stone_speed*m_sign.at(i));
                 }
                 else{
-                    if(m_s.at(i).getX() >= 14 || m_s.at(i).getX() <= -14){
+                    if(std::abs(m_s.at(i).getX())>=14){
                         m_sign.at(i) = m_sign.at(i) * (-1);
                 }
                     m_s.at(i).setX(m_s.at(i).getX()-m_stone_speed*m_sign.at(i));

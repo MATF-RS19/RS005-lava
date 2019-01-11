@@ -183,6 +183,7 @@ static void initialize_stone(){
             stones.push_back(stone);
             if(random_num==i){
                 b.setX(-10);
+//                 b.setY(1.5);
                 b.setZ(i*5-10.0);
             }
         }
@@ -191,6 +192,7 @@ static void initialize_stone(){
             stones.push_back(stone);      
                 if(random_num==i){
                     b.setX(10);
+//                     b.setY(1.5);
                     b.setZ(i*5-10.0);
                 }        
         }
@@ -209,17 +211,14 @@ void reset(){
         readLevel();
     }
 
-//     std::cout<<man.getLifeNum();
     a.setJumpOngoing(0);
     man.setX(0);
     man.setY(3);
     man.setZ(-15);
-    man.setNumStone(-1);
     man.setLifeNum(man.getLifeNum());
     a.setPomAnim(0);
     a.setNum(-1);
-    b.setNumStone(-1);
-    
+    b.setY(1.5);
     a.setStonemove(0);
     for (int i=0;i<5;i++)
     {
@@ -278,12 +277,10 @@ void readLevel(){
     stoneScale.clear();
     
     lvl+=1;
-    
-    
+
     if(lvl==2){
-        random_num= std::experimental::randint(0,4);
-        b.setNumStone(random_num);
-//         std::cout<<random_num<<std::endl;
+        random_num=std::experimental::randint(0,4);
+         std::cout<<random_num<<std::endl;
     }
     
     std::string level = "lvl" + std::to_string(lvl);
