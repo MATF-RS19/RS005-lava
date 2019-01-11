@@ -282,6 +282,28 @@ void Bonus::setY(double y){
     m_y_pos=y;    
 }
 void Bonus::setZ(double z){
-    m_z_pos=z;
+ m_z_pos=z;   
 }
+
     
+double Bonus::getX() const{
+ return m_x_pos;   
+}
+double Bonus::getZ() const{
+ return m_z_pos;   
+}
+
+double Bonus::getNumStone() const{
+ return m_numStone;   
+}
+
+void Bonus::setNumStone(int z){
+    m_numStone=z;
+}
+int Man::getNumStone() const{
+ return m_numStone;
+}
+
+void Man::setNumStone(int num){
+    m_numStone=num;
+}

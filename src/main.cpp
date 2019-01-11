@@ -47,8 +47,8 @@ std::vector<double> stoneScale;
 Island i1(0, 0, -29);
 Island i2(0, 0, 29);
 Floor_ f(0, 0, 0);
-Animation a(man, stones);
 Bonus b(random_num,1.5,random_num);
+Animation a(man, stones,b);
 
 int main(int argc, char** argv){
     
@@ -209,15 +209,16 @@ void reset(){
         readLevel();
     }
 
-    
+//     std::cout<<man.getLifeNum();
     a.setJumpOngoing(0);
     man.setX(0);
     man.setY(3);
     man.setZ(-15);
+    man.setNumStone(-1);
     man.setLifeNum(man.getLifeNum());
     a.setPomAnim(0);
     a.setNum(-1);
-    
+    b.setNumStone(-1);
     
     a.setStonemove(0);
     for (int i=0;i<5;i++)
@@ -281,7 +282,8 @@ void readLevel(){
     
     if(lvl==2){
         random_num= std::experimental::randint(0,4);
-        std::cout<<random_num<<std::endl;
+        b.setNumStone(random_num);
+//         std::cout<<random_num<<std::endl;
     }
     
     std::string level = "lvl" + std::to_string(lvl);

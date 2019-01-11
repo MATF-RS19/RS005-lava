@@ -65,8 +65,8 @@ private:
 
 class Man{
 public:
-    Man(double x_pos, double y_pos, double z_pos,int life_num=3)
-    :m_x_pos(x_pos), m_y_pos(y_pos), m_z_pos(z_pos) , m_life_num(life_num)
+    Man(double x_pos, double y_pos, double z_pos,int life_num=3, int numStone=-1)
+    :m_x_pos(x_pos), m_y_pos(y_pos), m_z_pos(z_pos) , m_life_num(life_num),m_numStone(numStone)
     {};
   
     void setX(double x);
@@ -77,28 +77,35 @@ public:
     double getZ() const;
     int getLifeNum() const;
     void setLifeNum(int life);
+    int getNumStone() const;
+    void setNumStone (int num);
     void man_figure() const;
     void man_draw();
     friend class Animation;
     
 private:
     double m_x_pos, m_y_pos, m_z_pos;
-    int m_life_num;
+    int m_life_num,m_numStone;
 };
 
 class Bonus{
 public:  
-    Bonus(double x_pos, double y_pos, double z_pos)
-    :m_x_pos(x_pos),m_y_pos(y_pos), m_z_pos(z_pos){};
+    Bonus(double x_pos, double y_pos, double z_pos,int numStone=-1)
+    :m_x_pos(x_pos),m_y_pos(y_pos), m_z_pos(z_pos),m_numStone(numStone){};
     
     void bonus_figure() const ;
     void bonus_draw();
     
     void setX(double x);
-    void setY(double x);
-    void setZ(double x);
     
+    void setY(double x);
+    void setZ(double z);
+    void setNumStone(int x);
+    double getX() const;
+    double getZ() const;
+    double  getNumStone() const;
     friend class Animation;
 private:
     double m_x_pos,m_y_pos, m_z_pos;
+    int m_numStone;
 };
