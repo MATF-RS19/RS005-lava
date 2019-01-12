@@ -88,8 +88,8 @@ private:
 
 class Bonus{
 public:  
-    Bonus(double x_pos, double y_pos, double z_pos)
-    :m_x_pos(x_pos),m_y_pos(y_pos), m_z_pos(z_pos){};
+    Bonus(double x_pos, double y_pos, double z_pos,int pom=0)
+    :m_x_pos(x_pos),m_y_pos(y_pos), m_z_pos(z_pos),m_pom(pom){};
     
     void bonus_figure() const ;
     void bonus_draw();
@@ -98,10 +98,13 @@ public:
     
     void setY(double x);
     void setZ(double z);
-    void setNumStone(int x);
+    void setPom(int x);
+    int getPom();
+    
     double getX() const;
     double getZ() const;
     friend class Animation;
 private:
     double m_x_pos,m_y_pos, m_z_pos;
+    int m_pom;
 };

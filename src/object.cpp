@@ -138,7 +138,7 @@ void Man::setLifeNum(int life){
     m_life_num=life;
 }
 void Man::man_figure() const{
-    
+    /*ideja preuzeta iz projekta Katarine Rudinac.*/
      glPushMatrix();    
 		glColor3f(.8, 0.2, 0.2);
 		glScalef(1, 1.43, .5);
@@ -285,6 +285,13 @@ void Bonus::setZ(double z){
  m_z_pos=z;   
 }
     
+void Bonus::setPom(int x){
+ m_pom=x;
+}   
+
+int Bonus::getPom(){
+ return m_pom;
+}   
 double Bonus::getX() const{
  return m_x_pos;   
 }

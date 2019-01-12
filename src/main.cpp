@@ -4,6 +4,7 @@
 #include <vector>
 #include <iterator>
 #include <algorithm>
+#include <cmath>
 #include <experimental/random>
 
 
@@ -23,14 +24,17 @@ extern int pom_anim;
 int lvl = 0;
 int random_num;
 extern int life_num=3;
-float x,y,z;
 
 static void on_timer(int value);
 static void on_reshape(int width, int height);
 static void on_display(void);
 static void on_keyboard(unsigned char key, int x , int y);
 static void initializeTexture(void);
+/*funckija za Inicijalizaciju kamenja. */
 static void initialize_stone();
+/*funkcija za Inicijalizaciju bonus life-a */
+int initialize_bonus(int random_num);
+
 void reset();
 static void readLevel();
 
@@ -47,14 +51,13 @@ std::vector<double> stoneScale;
 Island i1(0, 0, -29);
 Island i2(0, 0, 29);
 Floor_ f(0, 0, 0);
-Bonus b(random_num,1.5,random_num);
+Bonus b(-15,1.5,-15);
 Animation a(man, stones,b);
 
 int main(int argc, char** argv){
     
     readLevel();
     initialize_stone();
-	//inicijalizujemo glut
 	glutInit(&argc, argv);
 	glutInitDisplayMode(GLUT_RGB | GLUT_DOUBLE | GLUT_DEPTH);
 	
@@ -127,18 +130,24 @@ void on_display(void){
     glMaterialfv(GL_FRONT_AND_BACK, GL_SPECULAR, specular_material);
     
     f.f_draw(lava_texture);
+    /*crtamo velika ostrva. */
     i1.island_draw();
     i2.island_draw();
+    
+    /*crtamo coveka. */
     man.man_draw();
     
-    
+    /*iscrtavamo kamenje. */
     for (Stone stonee: stones){
         stonee.stone_draw();   
     }
-    if(lvl==2){
+    
+    /*iscrtava bonus life kada je to potrebno. */
+    if(initialize_bonus(random_num)==1 &&   b.getPom()==0){
         b.bonus_draw();
     }
-	glutSwapBuffers();
+    
+ 	glutSwapBuffers();
 }
 
 
@@ -173,30 +182,40 @@ static void on_keyboard(unsigned char key, int x, int y){
             break;
     }
 }
+int  initialize_bonus(int random_num){
+    if(std::abs(lvl-2)==0){
+        if(std::fmod(random_num,2)==0){
+            /*ukoliko je pomocna za bonus life=0 postavljamo koordinate za iscrtavanje. */
+            if(b.getPom()==0){
+                b.setX(-10);
+                b.setZ(random_num*5-10.0);
+            }
+            return 1;
+        }
+        else{
+          if(b.getPom()==0){
+            b.setX(10);
+            b.setZ(random_num*5-10.0);
+          
+          }
+          return 1;
+        }
+    }
+    return 0;
+   
+}
 
 static void initialize_stone(){
-     for (int i=0;i<5;i++)
-    {
-
-        if(i%2==0){
+    
+     for (int i=0;i<5;i++){
+        if(std::fmod(i,2)==0){
             Stone stone(-10,0.5,i*5-10.0,stoneSpeed.at(i),stoneScale.at(i));
             stones.push_back(stone);
-            if(random_num==i){
-                b.setX(-10);
-//                 b.setY(1.5);
-                b.setZ(i*5-10.0);
-            }
         }
         else{
             Stone stone(10,0.5,i*5-10.0,stoneSpeed.at(i),stoneScale.at(i));        
-            stones.push_back(stone);      
-                if(random_num==i){
-                    b.setX(10);
-//                     b.setY(1.5);
-                    b.setZ(i*5-10.0);
-                }        
-        }
-        
+            stones.push_back(stone);  
+        }        
     }
 }
 
@@ -219,20 +238,18 @@ void reset(){
     a.setPomAnim(0);
     a.setNum(-1);
     b.setY(1.5);
+    
+    b.setPom(0);
     a.setStonemove(0);
     for (int i=0;i<5;i++)
     {
         
-        if(i%2==0){
-            //std::cout<<stoneSpeed.at(i);
+        if(std::fmod(i,2)==0){
             Stone stone(-10,0.5,i*5-10.0,stoneSpeed.at(i),stoneScale.at(i));
             stones[i]=stone;
         }
-        else{
-            //std::cout<<stoneSpeed.at(i);
-            
+        else{            
             Stone stone(10,0.5,i*5-10.0,stoneSpeed.at(i),stoneScale.at(i));
-            
             stones[i]=stone;
         }
     }
@@ -281,6 +298,7 @@ void readLevel(){
     if(lvl==2){
         random_num=std::experimental::randint(0,4);
          std::cout<<random_num<<std::endl;
+         initialize_bonus(random_num);
     }
     
     std::string level = "lvl" + std::to_string(lvl);
@@ -334,7 +352,6 @@ static void on_timer(int value){
         
         if(a.getNum()==5){
             std::cout<<"POBEDA"<<std::endl;
-           
             readLevel();            
             reset();
         }
@@ -348,7 +365,3 @@ static void on_timer(int value){
     }
 
 }
-
-
-
-
