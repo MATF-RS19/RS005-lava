@@ -29,6 +29,8 @@ extern int life_num=3;
 static int score;
 
 std::string text;
+std::string text2;
+
 
 static void on_timer(int value);
 static void on_reshape(int width, int height);
@@ -137,14 +139,23 @@ void on_display(void){
     glColor3f(1, 1, 0);
     
 	glRasterPos3f(6, 2, 15);
-	int len,i;
+	int len,i,len2;
     
     
     text = "Score: " + std::to_string(a.getScore()) + "     " + "Level: " + std::to_string(lvl);
+    text2 = "Life: "+  std::to_string(man.getLifeNum());
+    
     len= text.length();
+    len2=text2.length();
 
     for(i=0;i<len;i++){
         glutBitmapCharacter(GLUT_BITMAP_TIMES_ROMAN_24, text.at(i));
+    }
+    
+    glColor3f(1, 0, 0);
+	glRasterPos3f(3, 2, 15);
+    for(i=0;i<len2;i++){
+        glutBitmapCharacter(GLUT_BITMAP_TIMES_ROMAN_24, text2.at(i));
     }
     
     f.f_draw(lava_texture);
@@ -214,7 +225,7 @@ static void on_keyboard(unsigned char key, int x, int y){
     }
 }
 int  initialize_bonus(int random_num){
-    if(std::abs(lvl-2)==0){
+    if(std::abs(lvl-2)==0 || std::abs(lvl-3)==0){
         if(std::fmod(random_num,2)==0){
             /*ukoliko je pomocna za bonus life=0 postavljamo koordinate za iscrtavanje. */
             if(b.getPom()==0){
@@ -253,7 +264,7 @@ static void initialize_stone(){
 
 void reset(){
 
-    if(man.getLifeNum()<=0 || lvl==3){
+    if(man.getLifeNum()<=0 || lvl==4){
         std::cout<<"Score :"<< a.getScore()<<std::endl;
         lvl=0;
         a.setScore(0);
@@ -321,8 +332,8 @@ void readLevel(){
     
     lvl+=1;
 
-    if(lvl==2){
-        random_num=std::experimental::randint(0,4);
+    if(lvl==2 || lvl==3){
+         random_num=std::experimental::randint(0,4);
          std::cout<<random_num<<std::endl;
          initialize_bonus(random_num);
     }
