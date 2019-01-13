@@ -103,7 +103,7 @@ void on_reshape(int width, int height) {
 
 
 void on_display(void){
-	
+	    
 
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     //podesavamo lookat
