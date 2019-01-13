@@ -26,6 +26,10 @@ int lvl = 0;
 int random_num;
 extern int life_num=3;
 
+static int score;
+
+std::string text;
+
 static void on_timer(int value);
 static void on_reshape(int width, int height);
 static void on_display(void);
@@ -129,6 +133,19 @@ void on_display(void){
     glMaterialf(GL_FRONT_AND_BACK, GL_SHININESS, shininess);
     glMaterialfv(GL_FRONT_AND_BACK, GL_AMBIENT,ambient_material);
     glMaterialfv(GL_FRONT_AND_BACK, GL_SPECULAR, specular_material);
+    
+    glColor3f(1, 1, 0);
+    
+	glRasterPos3f(6, 2, 15);
+	int len,i;
+    
+    
+    text = "Score: " + std::to_string(a.getScore()) + "     " + "Level: " + std::to_string(lvl);
+    len= text.length();
+
+    for(i=0;i<len;i++){
+        glutBitmapCharacter(GLUT_BITMAP_TIMES_ROMAN_24, text.at(i));
+    }
     
     f.f_draw(lava_texture);
     /*crtamo velika ostrva. */
