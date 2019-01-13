@@ -127,6 +127,11 @@ void Animation::animation_stone(){
                         m_pom_anim=2;   
                         nestanak_kamena=0;   
                     }
+                    /*ukoliko covek skoci na vreme sa kamena na kamen pre nego sto potone, taj kamen se vraca na prvobutnu vrednost. */
+                    if(m_jump_ongoing==1 || m_jump_ongoing==2){
+                        m_s.at(m_num).setY(m_s.at(m_num).getY()+nestanak);   
+                        nestanak=0;
+                    }
                 }
              
             }
