@@ -17,24 +17,36 @@ float potapanje=0;
 float nestanak=0;
 float nestanak_kamena=0;
 void Animation::jump_anim(){
-        if(m_jump_ongoing==1){
+        if(m_jump_ongoing==1 || m_jump_ongoing==2){
             
             /*provera da li je skok dostigao odredjenu vrednost. */
             if(f(m_jumped,JUMP_LEN)==1){
-                m_jumped+=.2;
-                m_m.setZ(m_m.getZ()+.2);
-                m_m.setY(3+(-4*JUMP_HEIGHT*m_jumped*m_jumped)/(JUMP_LEN*JUMP_LEN)+4*JUMP_HEIGHT*m_jumped/JUMP_LEN);
+                if(m_jump_ongoing == 1){
+                    m_jumped+=.2;
+                    m_m.setZ(m_m.getZ()+.2);
+                    m_m.setY(3+(-4*JUMP_HEIGHT*m_jumped*m_jumped)/(JUMP_LEN*JUMP_LEN)+4*JUMP_HEIGHT*m_jumped/JUMP_LEN);
+                }
+                else{
+                    m_jumped+=.2;
+                    m_m.setZ(m_m.getZ()-.2);
+                    m_m.setY(3+(-4*JUMP_HEIGHT*m_jumped*m_jumped)/(JUMP_LEN*JUMP_LEN)+4*JUMP_HEIGHT*m_jumped/JUMP_LEN);
+                
+                }
             }
              else{  
-                 m_num += 1;
-                 if(f(m_num,5)==1){
+                 if(m_jump_ongoing==1)
+                    m_num += 1;
+                 else
+                     m_num -= 1;
+                 
+                 if(f(m_num,5)==1 && m_num>=0){
                      if((m_m.getX()<=(m_s.at(m_num).getX()) +2.5*m_s.at(m_num).getScale()/2)  && 
                      (m_m.getX()>=(m_s.at(m_num).getX()- 2.5*m_s.at(m_num).getScale()/2))  
                      ){
                          /*covek je uspeo da skoci bezbedno.Dodajemo mu poene i postavljamo m_pom_anim na 1. */
                         m_pom_anim=1;
                         /*dodajemo dobijene poene. */
-                        m_score_num=m_score_num+(m_num*m_m.getLifeNum());
+                        m_score_num=m_score_num+((m_num+1)*m_m.getLifeNum());
                     
                     }
                     else{
@@ -66,6 +78,8 @@ void Animation::jump_anim(){
 
         }
 }
+
+
 
 void Animation::animation_stone(){
 
@@ -196,10 +210,10 @@ int Animation::getPomAnim() const
 void Animation::setPomAnim(int j){
         m_pom_anim=j;
 }
-float Animation::getScore() const{
+int Animation::getScore() const{
  return m_score_num;   
 }
-void Animation::setScore(float score){
+void Animation::setScore(int score){
  m_score_num=score;   
 }
     

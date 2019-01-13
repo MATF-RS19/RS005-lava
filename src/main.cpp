@@ -5,6 +5,7 @@
 #include <iterator>
 #include <algorithm>
 #include <cmath>
+#include <string>
 #include <experimental/random>
 
 
@@ -164,6 +165,19 @@ static void on_keyboard(unsigned char key, int x, int y){
                         a.setJumpOngoing(1);
                         a.setJumped(0);
                         glutTimerFunc(TIMER_INTERVAL, on_timer, 0);
+                    }
+                }
+            }
+            break;
+        case 'g':
+            if(a.getNum()>=0){
+                if(a.getPomAnim()!=2){
+                    if(a.getStonemove()==1){
+                        if(a.getJumpOngoing()==0){
+                            a.setJumpOngoing(2);
+                            a.setJumped(0);
+                            glutTimerFunc(TIMER_INTERVAL, on_timer, 0);
+                        }
                     }
                 }
             }
@@ -344,15 +358,26 @@ static void on_timer(int value){
             a.jump_anim();
             
         }
+        if(a.getJumpOngoing()==2){
+            a.jump_anim();            
+        }
         
         if(a.getNum()==5){
             std::cout<<"POBEDA"<<std::endl;
             readLevel();            
             reset();
-        }
+        }/*
+        if(a.getNum()<0){
+            std::cout<<"premalo"<<std::endl;
+        }*/
         //ponovo se iscrtava prozor	
         glutPostRedisplay();
         if(a.getJumpOngoing()==1){
+            glutTimerFunc(TIMER_INTERVAL, on_timer, 0);
+
+        }
+        
+        if(a.getJumpOngoing()==2){
             glutTimerFunc(TIMER_INTERVAL, on_timer, 0);
 
         }
