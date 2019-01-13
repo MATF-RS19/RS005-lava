@@ -31,24 +31,16 @@ typedef struct {
 
 /* Struktura za smestanje podataka o slici. */
 typedef struct Image {
+    Image(int width, int height);
+    ~Image();
+    /*
+     * Funkcija za ucitavanje podataka o slici koja se nalazi
+     * u fajlu cije je ime filename u strukturu na koju pokazuje
+     * image.
+     */
+    void read(const char *filename);
   int width, height; /* Dimenzije slike. */
   char *pixels; /* Niz u kojem se cuvaju podaci za sve piksele u obliku (R, G, B). */
 } Image;
-
-/* Funkcija koja inicijalizuje strukturu i vraca pokazivac na nju. */
-Image *image_init(int width, int height);
-
-/*
- * Funkcija koja oslobadja prostor u kojem su se cuvali
- * podaci o slici.
- */
-void image_done(Image *image);
-
-/*
- * Funkcija za ucitavanje podataka o slici koja se nalazi
- * u fajlu cije je ime filename u strukturu na koju pokazuje
- * image.
- */
-void image_read(Image *image, char *filename);
 
 #endif

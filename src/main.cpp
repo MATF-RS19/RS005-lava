@@ -8,7 +8,7 @@
 #include <experimental/random>
 
 
-#include "image.h"
+#include "image.hpp"
 #include "animation.hpp"
 #include "object.hpp"
 
@@ -261,14 +261,11 @@ void initializeTexture(void)
 {
 	//kod sa casa
 	    glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_REPLACE);
-
-	/* Inicijalizuje se objekat koji ce sadrzati teksture ucitane iz fajla */
-    Image *image = image_init(0, 0);
+    Image image(0,0);
 
 
     /* Kreira se tekstura */
-    image_read(image, LAVATEXTURE);
-
+    image.read(LAVATEXTURE);
     /* Generisu se identifikatori teksture i inicijalizuje tekstura*/
     glGenTextures(1, &lava_texture);
 
@@ -278,14 +275,12 @@ void initializeTexture(void)
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
     glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB,
-                 image->width, image->height, 0,
-                 GL_RGB, GL_UNSIGNED_BYTE, image->pixels);
+                 image.width, image.height, 0,
+                 GL_RGB, GL_UNSIGNED_BYTE, image.pixels);
     
     /* Iskljucujemo aktivnu teksturu */
     glBindTexture(GL_TEXTURE_2D, 0);
 
-    /* Unistava se objekat za citanje tekstura iz fajla. */
-    image_done(image);
 }
 
 void readLevel(){

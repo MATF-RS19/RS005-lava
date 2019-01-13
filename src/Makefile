@@ -3,10 +3,10 @@ CFLAGS = -Wall -Wextra -std=c++17 -lglut -lGLU -lGL
 lava: main.o image.o animation.o object.o
 	g++ $^ $(CFLAGS) -o $@
 	
-main.o: main.cpp image.h animation.hpp object.hpp
+main.o: main.cpp image.hpp animation.hpp object.hpp
 	g++ -c $< $(CFLAGS)
 	
-image.o: image.c image.h
+image.o: image.cpp image.hpp
 	g++ -c $< $(CFLAGS)
 	
 object.o: object.cpp object.hpp
