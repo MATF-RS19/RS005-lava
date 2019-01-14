@@ -84,13 +84,6 @@ void Animation::jump_anim(){
 
 
 void Animation::animation_stone(){
-    for(int i=0; i<5; i++){
-        if(std::abs(m_g[i].getZ()-m_m.getZ())<=0.001 && std::abs(m_m.getX()-m_g[i].getX())<=0.001 && m_g[i].getCaught()==0){
-            std::cout<<"uhvatio"<<std::endl;
-            m_g[i].setCaught();
-            
-        }
-    }
         if(m_anim_stone<=1){
                        
             /*covek je dobro skocio. */

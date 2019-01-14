@@ -174,7 +174,7 @@ void on_display(void){
         stonee.stone_draw();   
     }
     for(Gold coin: coins){
-        std::cout<<coin.getCaught()<<std::endl;
+
         if(coin.getCaught()==0)
             coin.f_draw();
         
@@ -256,7 +256,6 @@ int  initialize_bonus(int random_num){
 }
 
 static void initialize_coins(){
-    std::srand(std::time(nullptr));
     for(int i=0; i<5; i++){
         Gold coin(i*5-10, 2, -10+i*5, 0);
         coins.push_back(coin);
@@ -377,6 +376,14 @@ void readLevel(){
 
 
 static void on_timer(int value){
+    
+    for(int i=0; i<5; i++){
+        if(std::abs(coins[i].getZ()-man.getZ())<=0.1 && std::abs(man.getX()-coins[i].getX())<=0.1 && coins[i].getCaught()==0){
+            std::cout<<"uhvatio "<<i<<std::endl;
+            coins[i].setCaught();
+            
+        }
+    }
     if(value == 1){
         
         if(man.getY()<=-2){
