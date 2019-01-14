@@ -128,6 +128,7 @@ void Animation::animation_stone(){
                     if(f(0.0164,nestanak_kamena)==1){
 //                     if(nestanak_kamena>=0.0165){
                         m_pom_anim=2;   
+                        m_m.setLifeNum(m_m.getLifeNum()-1);
                         nestanak_kamena=0;   
                     }
                     /*ukoliko covek skoci na vreme sa kamena na kamen pre nego sto potone, taj kamen se vraca na prvobutnu vrednost. */
