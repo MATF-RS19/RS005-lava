@@ -378,8 +378,8 @@ void readLevel(){
 static void on_timer(int value){
     
     for(int i=0; i<5; i++){
-        if(std::abs(coins[i].getZ()-man.getZ())<=0.1 && std::abs(man.getX()-coins[i].getX())<=0.1 && coins[i].getCaught()==0){
-            std::cout<<"uhvatio "<<i<<std::endl;
+        if(std::abs(coins[i].getZ()-man.getZ())<=0.1 && std::abs(man.getX()-coins[i].getX())<=0.5 && coins[i].getCaught()==0){
+//             std::cout<<"uhvatio "<<i<<std::endl;
             coins[i].setCaught();
             
         }
