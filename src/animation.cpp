@@ -48,7 +48,7 @@ void Animation::jump_anim(){
                          /*covek je uspeo da skoci bezbedno.Dodajemo mu poene i postavljamo m_pom_anim na 1. */
                         m_pom_anim=1;
                         /*dodajemo dobijene poene. */
-                        m_score_num=m_score_num+((m_num+1)*m_m.getLifeNum());
+                       // m_score_num=m_score_num+((m_num+1)*m_m.getLifeNum());
                     
                     }
                     else{
@@ -97,6 +97,14 @@ void Animation::animation_stone(){
 //                 std::cout<<"ANIM STONE: "<<m_b.getPom()<<std::endl;
                 
                 
+                for(int i=0; i<5; i++){
+                    if(std::abs(m_g[i].getZ()-m_m.getZ())<=0.1 && std::abs(m_m.getX()-m_g[i].getX())<=0.5 && m_g[i].getCaught()==0){
+            //             std::cout<<"uhvatio "<<i<<std::endl;
+                        m_g[i].setCaught();
+                        m_score_num+=5;
+                        
+                    }
+                }
                 if(std::abs(m_b.getZ()-m_m.getZ())<=0.001 && std::abs(m_m.getX()-m_b.getX())<=0.001 && m_b.getPom()==0){
                     m_m.setLifeNum(m_m.getLifeNum()+1);
                     std::cout<<"LIFE: "<<m_m.getLifeNum()<<std::endl;   
