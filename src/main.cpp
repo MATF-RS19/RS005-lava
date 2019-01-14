@@ -16,33 +16,35 @@
 
 #define LAVATEXTURE "lava.bmp"
 #define TIMER_INTERVAL 20
-#define TIMER_INTERVAL2 200
+#define TIMER_INTERVAL2 100
 
 #define JUMP_LEN 5
 #define JUMP_HEIGHT 2
 
 GLuint lava_texture;
-extern int pom_anim;
+// extern int pom_anim;
 int lvl = 0;
 int random_num;
-extern int life_num=3;
+int life_num=3;
 int coins_initialized=0;
 
-static int score;
-
+/*text i text2 nam omogucavaju ispis teksta na ekran. */
 std::string text;
 std::string text2;
 
-static void initialize_coins();
 static void on_timer(int value);
 static void on_reshape(int width, int height);
 static void on_display(void);
 static void on_keyboard(unsigned char key, int x , int y);
+
+/*funkcija za inicijalizaciju tekstura. */
 static void initializeTexture(void);
-/*funckija za Inicijalizaciju kamenja. */
+/*funckija za inicijalizaciju kamenja. */
 static void initialize_stone();
-/*funkcija za Inicijalizaciju bonus life-a */
+/*funkcija za inicijalizaciju bonus life-a */
 int initialize_bonus(int random_num);
+/*funkcija za inicijalizaciju zlatnika */
+static void initialize_coins();
 
 void reset();
 static void readLevel();
