@@ -61,7 +61,7 @@ Island i1(0, 0, -29);
 Island i2(0, 0, 29);
 Floor_ f(0, 0, 0);
 Bonus b(-15,1.5,-15);
-Animation a(man, stones,b);
+Animation a(man, stones, coins, b);
 
 int main(int argc, char** argv){
     
@@ -177,6 +177,8 @@ void on_display(void){
         coin.f_draw();
         
     }
+    Gold g(2, 2, 2, 1);
+    g.f_draw();
     /*iscrtava bonus life kada je to potrebno. */
     if(initialize_bonus(random_num)==1 &&   b.getPom()==0){
         b.bonus_draw();
