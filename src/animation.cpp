@@ -137,7 +137,7 @@ void Animation::animation_stone(){
                     nestanak=0;
                 }
                 /*ukoliko covek ne skoci na vreme sa jednog kamena na drugo moze da izgubi zivot.*/
-                if(f(nestanak_kamena,0.04)==1){
+                if(f(nestanak_kamena,0.045)==1){
                     /*povecavamo nestanak_kamena zeljenim intervalom. */
                     nestanak_kamena+=0.0002;
                     /*smanjujemo Y kordinatu kamena gde se nalazi covek. */
