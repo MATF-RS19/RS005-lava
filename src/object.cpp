@@ -25,7 +25,7 @@ void Stone::stone_figure() const{
          glPopMatrix();
 }
 
-void Gold::f_draw(){
+void Gold::f_draw() const{
     if(m_caught!=1){
         glPushMatrix();
             glTranslatef(m_x_pos, m_y_pos, m_z_pos);
@@ -34,7 +34,7 @@ void Gold::f_draw(){
         glPopMatrix();
     }
 }
-void Gold::pom_f_draw(){
+void Gold::pom_f_draw() const{
     glScalef(.4, .4, .4);
     glColor3f(212.0/255.0,120.0/255.0, 0);
     glutSolidSphere(1, 20, 20);

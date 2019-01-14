@@ -173,11 +173,11 @@ void on_display(void){
     man.man_draw();
     
     /*iscrtavamo kamenje. */
-    for (Stone stonee: stones){
+    for (const Stone &stonee: stones){
         stonee.stone_draw();   
     }
     /*crtamo zlatnike. */
-    for(Gold coin: coins){
+    for(Gold &coin: coins){
 
         if(coin.getCaught()==0)
             coin.f_draw();
@@ -273,13 +273,13 @@ static void initialize_coins(){
         
     }
     else{
-        for(int i=0; i<5; i++){
-            Gold coin(std::experimental::randint(0,4)*5-10, 2, -10+i*5, 0);
-            coins[i]=coin;
+        int i=0;
+        for(Gold &coin: coins){
+            coin = Gold(std::experimental::randint(0,4)*5-10, 2, -10+i*5, 0);
+            i++;
         }
 
-    }
-    
+    }    
 }
 
 static void initialize_stone(){

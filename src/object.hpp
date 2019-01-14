@@ -39,8 +39,8 @@ public:
     Gold(double x_pos, double y_pos, double z_pos, int caught):
     m_x_pos(x_pos), m_y_pos(y_pos), m_z_pos(z_pos), m_caught(caught)
     {};
-    void f_draw();
-    void pom_f_draw();
+    void f_draw() const;
+    void pom_f_draw() const;
     void setCaught();
     int getCaught() const;
     double getX() const;
