@@ -27,11 +27,11 @@ void Stone::stone_figure() const{
 
 void Gold::f_draw(){
     if(m_caught!=1){
-    glPushMatrix();
-        glTranslatef(m_x_pos, m_y_pos, m_z_pos);
-        
-        pom_f_draw();
-    glPopMatrix();
+        glPushMatrix();
+            glTranslatef(m_x_pos, m_y_pos, m_z_pos);
+            
+            pom_f_draw();
+        glPopMatrix();
     }
 }
 void Gold::pom_f_draw(){

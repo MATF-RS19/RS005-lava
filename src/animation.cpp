@@ -16,7 +16,9 @@ bool f(T1 a, T2 b, L l = L())
 float potapanje=0;
 float nestanak=0;
 float nestanak_kamena=0;
+
 void Animation::jump_anim(){
+
         if(m_jump_ongoing==1 || m_jump_ongoing==2){
             
             /*provera da li je skok dostigao odredjenu vrednost. */
@@ -82,7 +84,13 @@ void Animation::jump_anim(){
 
 
 void Animation::animation_stone(){
-
+    for(int i=0; i<5; i++){
+        if(std::abs(m_g[i].getZ()-m_m.getZ())<=0.001 && std::abs(m_m.getX()-m_g[i].getX())<=0.001 && m_g[i].getCaught()==0){
+            std::cout<<"uhvatio"<<std::endl;
+            m_g[i].setCaught();
+            
+        }
+    }
         if(m_anim_stone<=1){
                        
             /*covek je dobro skocio. */
@@ -94,6 +102,8 @@ void Animation::animation_stone(){
                 
                 /*ukoliko su z i x koordinata bonusa== z i x koordinati coveka povecavamo zivot za 1 i bonus treba da nestane. */
 //                 std::cout<<"ANIM STONE: "<<m_b.getPom()<<std::endl;
+                
+                
                 if(std::abs(m_b.getZ()-m_m.getZ())<=0.001 && std::abs(m_m.getX()-m_b.getX())<=0.001 && m_b.getPom()==0){
                     m_m.setLifeNum(m_m.getLifeNum()+1);
                     std::cout<<"LIFE: "<<m_m.getLifeNum()<<std::endl;   

@@ -174,11 +174,11 @@ void on_display(void){
         stonee.stone_draw();   
     }
     for(Gold coin: coins){
-        coin.f_draw();
+        std::cout<<coin.getCaught()<<std::endl;
+        if(coin.getCaught()==0)
+            coin.f_draw();
         
     }
-    Gold g(2, 2, 2, 1);
-    g.f_draw();
     /*iscrtava bonus life kada je to potrebno. */
     if(initialize_bonus(random_num)==1 &&   b.getPom()==0){
         b.bonus_draw();
