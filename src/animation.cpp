@@ -15,6 +15,7 @@ bool f(T1 a, T2 b, L l = L())
 
 float potapanje=0;
 float nestanak=0;
+float nestanak2=0;
 float nestanak_kamena=0;
 
 void Animation::jump_anim(){
@@ -48,7 +49,7 @@ void Animation::jump_anim(){
                          /*covek je uspeo da skoci bezbedno.Dodajemo mu poene i postavljamo m_pom_anim na 1. */
                         m_pom_anim=1;
                         /*dodajemo dobijene poene. */
-                       // m_score_num=m_score_num+((m_num+1)*m_m.getLifeNum());
+                        m_score_num=m_score_num+((m_num+1)*m_m.getLifeNum());
                     
                     }
                     else{
@@ -115,6 +116,7 @@ void Animation::animation_stone(){
                 }
                 /*posle odredjenog vremena bonus promeni svoje mesto */
                 nestanak+=0.01;
+                nestanak2+=0.01;
                 /*ukoliko nestanak predje 1 ponovo se javlja bonus life.*/
                 if(f(nestanak,1)==0){                        
                 /*ponovo biramo ostrvo na kome ce da se pojavi bonus */
@@ -141,8 +143,8 @@ void Animation::animation_stone(){
                     }
                     /*ukoliko covek skoci na vreme sa kamena na kamen pre nego sto potone, taj kamen se vraca na prvobutnu vrednost. */
                     if(m_jump_ongoing==1 || m_jump_ongoing==2){
-                        m_s.at(m_num).setY(m_s.at(m_num).getY()+nestanak);   
-                        nestanak=0;
+                        m_s.at(m_num).setY(m_s.at(m_num).getY()+nestanak2);   
+                        nestanak2=0;
                     }
                 }
              
