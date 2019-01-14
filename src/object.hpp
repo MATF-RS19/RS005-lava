@@ -3,6 +3,8 @@
 #include <GL/glut.h>
 #include <vector>
 #include <algorithm>
+#define PI 3.1415927
+
 class Animation;
 
 class Stone{
@@ -30,6 +32,26 @@ private:
     double m_z_pos;
     double m_speed;
     double m_scale;
+};
+
+class Gold{
+public:
+    Gold(double x_pos, double y_pos, double z_pos, int caught):
+    m_x_pos(x_pos), m_y_pos(y_pos), m_z_pos(z_pos), m_caught(caught)
+    {};
+    void f_draw();
+    void pom_f_draw();
+    void setCaught();
+    int getCaught() const;
+    double getX() const;
+    double getY() const;
+    double getZ() const;
+    friend class Animation;
+private:
+    double m_x_pos;
+    double m_y_pos;
+    double m_z_pos;
+    int m_caught;
 };
 
 class Floor_{

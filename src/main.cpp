@@ -7,7 +7,8 @@
 #include <cmath>
 #include <string>
 #include <experimental/random>
-
+#include <ctime>
+#include <cstdlib>
 
 #include "image.hpp"
 #include "animation.hpp"
@@ -31,7 +32,7 @@ static int score;
 std::string text;
 std::string text2;
 
-
+static void initialize_coins();
 static void on_timer(int value);
 static void on_reshape(int width, int height);
 static void on_display(void);
@@ -52,6 +53,7 @@ static void initializeTexture(void);
 
 Man man(0, 3,-15,life_num);
 std::vector<Stone> stones;
+std::vector<Gold> coins;
 std::vector<double> stoneSpeed;
 std::vector<double> stoneScale;
 // Stone stone(0,0,0,1,1);
@@ -65,6 +67,7 @@ int main(int argc, char** argv){
     
     readLevel();
     initialize_stone();
+    initialize_coins();
 	glutInit(&argc, argv);
 	glutInitDisplayMode(GLUT_RGB | GLUT_DOUBLE | GLUT_DEPTH);
 	
@@ -170,7 +173,10 @@ void on_display(void){
     for (Stone stonee: stones){
         stonee.stone_draw();   
     }
-    
+    for(Gold coin: coins){
+        coin.f_draw();
+        
+    }
     /*iscrtava bonus life kada je to potrebno. */
     if(initialize_bonus(random_num)==1 &&   b.getPom()==0){
         b.bonus_draw();
@@ -247,6 +253,14 @@ int  initialize_bonus(int random_num){
    
 }
 
+static void initialize_coins(){
+    std::srand(std::time(nullptr));
+    for(int i=0; i<5; i++){
+        Gold coin(i*5-10, 2, -10+i*5, 0);
+        coins.push_back(coin);
+    }
+    
+}
 static void initialize_stone(){
     
      for (int i=0;i<5;i++){

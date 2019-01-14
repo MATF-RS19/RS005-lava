@@ -24,6 +24,40 @@ void Stone::stone_figure() const{
             glutSolidCube(1);
          glPopMatrix();
 }
+
+void Gold::f_draw(){
+    if(m_caught!=1){
+    glPushMatrix();
+        glTranslatef(m_x_pos, m_y_pos, m_z_pos);
+        
+        pom_f_draw();
+    glPopMatrix();
+    }
+}
+void Gold::pom_f_draw(){
+    glScalef(.4, .4, .4);
+    glColor3f(212.0/255.0,120.0/255.0, 0);
+    glutSolidSphere(1, 20, 20);
+
+
+}
+void Gold::setCaught(){
+    m_caught=1;
+}
+int Gold::getCaught() const{
+    return m_caught;
+}
+
+double Gold::getX() const{
+    return m_x_pos;
+}
+double Gold::getY() const{
+    return m_y_pos;
+}
+double Gold::getZ() const{
+    return m_z_pos;
+}
+
 void Floor_::f_draw(GLuint lava_texture){
         //initializes textures
         glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_REPLACE);
