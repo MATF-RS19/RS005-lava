@@ -60,7 +60,7 @@ std::vector<double> stoneScale;
 Island i1(0, 0, -29);
 Island i2(0, 0, 29);
 Floor_ f(0, 0, 0);
-Bonus b(-15,1.5,-15);
+Bonus b(-15,1.5,-35);
 Animation a(man, stones, coins, b);
 
 int main(int argc, char** argv){
@@ -144,7 +144,7 @@ void on_display(void){
 	glRasterPos3f(6, 2, 15);
 	int len,i,len2;
     
-    
+    /*ispisujemo na display Score,Level i Life. */
     text = "Score: " + std::to_string(a.getScore()) + "     " + "Level: " + std::to_string(lvl);
     text2 = "Life: "+  std::to_string(man.getLifeNum());
     
@@ -157,6 +157,7 @@ void on_display(void){
     
     glColor3f(1, 0, 0);
 	glRasterPos3f(3, 2, 15);
+    
     for(i=0;i<len2;i++){
         glutBitmapCharacter(GLUT_BITMAP_TIMES_ROMAN_24, text2.at(i));
     }
@@ -173,6 +174,7 @@ void on_display(void){
     for (Stone stonee: stones){
         stonee.stone_draw();   
     }
+    /*crtamo zlatnike. */
     for(Gold coin: coins){
 
         if(coin.getCaught()==0)
@@ -205,6 +207,7 @@ static void on_keyboard(unsigned char key, int x, int y){
                 }
             }
             break;
+        /*skok unazad. */
         case 'g':
             if(a.getNum()>=0){
                 if(a.getPomAnim()!=2){
@@ -218,13 +221,15 @@ static void on_keyboard(unsigned char key, int x, int y){
                 }
             }
             break;
+        /*start */
         case 's':
             if(a.getStonemove()==0){
                 a.setStonemove(1);
                 glutTimerFunc(TIMER_INTERVAL,on_timer, 1);
             }
-            
             break;
+            
+        /*pauza. */
         case 'p':
             if(a.getStonemove()==1){
                 a.setStonemove(0);
@@ -233,6 +238,7 @@ static void on_keyboard(unsigned char key, int x, int y){
     }
 }
 int  initialize_bonus(int random_num){
+    /*ukoliko je lvl 2 ili 3 dolazi do inicijalizuje i  crtanja zlatnika */
     if(std::abs(lvl-2)==0 || std::abs(lvl-3)==0){
         if(std::fmod(random_num,2)==0){
             /*ukoliko je pomocna za bonus life=0 postavljamo koordinate za iscrtavanje. */
@@ -252,9 +258,9 @@ int  initialize_bonus(int random_num){
         }
     }
     return 0;
-   
 }
 
+/*postavljamo pocetne pozicije za zlatnike. */
 static void initialize_coins(){
     for(int i=0; i<5; i++){
         Gold coin(i*5-10, 2, -10+i*5, 0);
@@ -262,9 +268,12 @@ static void initialize_coins(){
     }
     
 }
+
 static void initialize_stone(){
+    /*postavljamo pocetne pozicije za kamenje, njihovu brzinu i skaliranje.*/
     
      for (int i=0;i<5;i++){
+        
         if(std::fmod(i,2)==0){
             Stone stone(-10,0.5,i*5-10.0,stoneSpeed.at(i),stoneScale.at(i));
             stones.push_back(stone);
@@ -278,7 +287,7 @@ static void initialize_stone(){
 
 
 void reset(){
-
+    /*ukoliko je broj zivota ispod nule ili je presao sve nivoe, sve se resetuje ponovo na pocetak. */
     if(man.getLifeNum()<=0 || lvl==4){
         std::cout<<"Score :"<< a.getScore()<<std::endl;
         lvl=0;
@@ -295,7 +304,8 @@ void reset(){
     a.setPomAnim(0);
     a.setNum(-1);
     b.setY(1.5);
-    
+    b.setX(-15);
+    b.setZ(-35);
     b.setPom(0);
     a.setStonemove(0);
     for (int i=0;i<5;i++)
@@ -339,35 +349,40 @@ void initializeTexture(void)
     glBindTexture(GL_TEXTURE_2D, 0);
 
 }
-
+/*funckija za ucitavanje nivoa. */
 void readLevel(){
     
     stoneSpeed.clear();
     stoneScale.clear();
     
     lvl+=1;
-
+    
+    /*ukoliko je lvl 2 ili 3 uzimamo jedan random broj od 0 do 4 i omogucavamo iscrtavanje bonus zivota. */
     if(lvl==2 || lvl==3){
          random_num=std::experimental::randint(0,4);
          std::cout<<random_num<<std::endl;
+         /*pozivamo funkciju za Inicijalizaciju  */
          initialize_bonus(random_num);
     }
-    
     std::string level = "lvl" + std::to_string(lvl);
     
     std::cout<<level<<std::endl;
     
+    
+    /*ucitavamo level*/
     
     std::ifstream ifile(level.c_str(), std::ios::in);
     if(!ifile.is_open()){
         std::cerr << "There was a problem opening the input file!\n";
         exit(1);
     }
-    
+    /*ucitavamo iz datoteke prvo broj za brzinu, a zatim i za skaliranje */
     double num = 0.0;
     double num2=0.0;
     while(ifile >> num){
+        /*unosimo brzinu. */
         stoneSpeed.push_back(num);
+        /*unosimo skaliranje */
         if(ifile>>num2){
             stoneScale.push_back(num2);
         }
@@ -382,12 +397,10 @@ static void on_timer(int value){
         if(man.getY()<=-2){
             reset();  
         }
-        
+        /*pomeramo kamenje. */
         if(a.getStonemove()==1){
             a.animation_stone();
         }
-        
-        
         
         glutPostRedisplay();
         
@@ -397,31 +410,20 @@ static void on_timer(int value){
         }
     }
     if (value == 0){
-        
-        if(a.getJumpOngoing()==1){
+        /*ukoliko je vrednost getJumpOngoing 1 ili 2 omogucavamo da covek skoci. */
+        if(a.getJumpOngoing()==1 || a.getJumpOngoing()==2){
             a.jump_anim();
             
         }
-        if(a.getJumpOngoing()==2){
-            a.jump_anim();            
-        }
-        
+        /*ukoliko je presao svo kamenje ide na sledeci nivo. */
         if(a.getNum()==5){
             std::cout<<"POBEDA"<<std::endl;
             readLevel();            
             reset();
-        }/*
-        if(a.getNum()<0){
-            std::cout<<"premalo"<<std::endl;
-        }*/
+        }
         //ponovo se iscrtava prozor	
         glutPostRedisplay();
-        if(a.getJumpOngoing()==1){
-            glutTimerFunc(TIMER_INTERVAL, on_timer, 0);
-
-        }
-        
-        if(a.getJumpOngoing()==2){
+        if(a.getJumpOngoing()==1 || a.getJumpOngoing()==2){
             glutTimerFunc(TIMER_INTERVAL, on_timer, 0);
 
         }
