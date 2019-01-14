@@ -24,8 +24,8 @@ Project done in C++  using OpenGl and Glut
 
 Authors :computer: :
 
-Katarina Rudinac
+- * **Katarina Rudinac** - [Lyanna-Stark](https://github.com/Lyanna-Stark)
 
-Sandra Gavovic 
+- * **Sandra Gavovic** - [Gavovic](https://github.com/Gavovic) 
 
-Katarina Bakic
+- * **Katarina Bakic** - [KatarinaBakic](https://github.com/KatarinaBakic)
