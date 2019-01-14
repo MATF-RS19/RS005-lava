@@ -125,7 +125,7 @@ void Animation::animation_stone(){
                     nestanak_kamena+=0.0002;
                     /*smanjujemo Y kordinatu kamena gde se nalazi covek. */
                     m_s.at(m_num).setY(m_s.at(m_num).getY()-nestanak_kamena);
-                    if(f(0.0164,nestanak_kamena)==1){
+                    if(f(0.017,nestanak_kamena)==1){
 //                     if(nestanak_kamena>=0.0165){
                         m_pom_anim=2;   
                         m_m.setLifeNum(m_m.getLifeNum()-1);
