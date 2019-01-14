@@ -26,6 +26,7 @@ extern int pom_anim;
 int lvl = 0;
 int random_num;
 extern int life_num=3;
+int coins_initialized=0;
 
 static int score;
 
@@ -238,7 +239,7 @@ static void on_keyboard(unsigned char key, int x, int y){
     }
 }
 int  initialize_bonus(int random_num){
-    /*ukoliko je lvl 2 ili 3 dolazi do inicijalizuje i  crtanja zlatnika */
+    /*ukoliko je lvl 2 ili 3 dolazi do inicijalizuje i  crtanja bonusa */
     if(std::abs(lvl-2)==0 || std::abs(lvl-3)==0){
         if(std::fmod(random_num,2)==0){
             /*ukoliko je pomocna za bonus life=0 postavljamo koordinate za iscrtavanje. */
@@ -262,9 +263,20 @@ int  initialize_bonus(int random_num){
 
 /*postavljamo pocetne pozicije za zlatnike. */
 static void initialize_coins(){
-    for(int i=0; i<5; i++){
-        Gold coin(i*5-10, 2, -10+i*5, 0);
-        coins.push_back(coin);
+    if(coins_initialized==0){
+        coins_initialized=1;
+        for(int i=0; i<5; i++){
+            Gold coin(std::experimental::randint(0,4)*5-10, 2, -10+i*5, 0);
+            coins.push_back(coin);
+        }
+        
+    }
+    else{
+        for(int i=0; i<5; i++){
+            Gold coin(std::experimental::randint(0,4)*5-10, 2, -10+i*5, 0);
+            coins[i]=coin;
+        }
+
     }
     
 }
@@ -294,6 +306,7 @@ void reset(){
         a.setScore(0);
         man.setLifeNum(3);
         readLevel();
+        initialize_coins();
     }
 
     a.setJumpOngoing(0);
@@ -419,7 +432,9 @@ static void on_timer(int value){
         if(a.getNum()==5){
             std::cout<<"POBEDA"<<std::endl;
             readLevel();            
+            initialize_coins();
             reset();
+            
         }
         //ponovo se iscrtava prozor	
         glutPostRedisplay();
