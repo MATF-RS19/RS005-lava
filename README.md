@@ -23,6 +23,9 @@ Project done in C++  using OpenGl and Glut
       esc : exit 
 
 Authors :computer: :
+
 Katarina Rudinac
+
 Sandra Gavovic 
+
 Katarina Bakic
