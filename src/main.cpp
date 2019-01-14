@@ -22,7 +22,6 @@
 #define JUMP_HEIGHT 2
 
 GLuint lava_texture;
-// extern int pom_anim;
 int lvl = 0;
 int random_num;
 int life_num=3;
